@@ -18,7 +18,7 @@
 
 | Requirement | How you tested it | Pass condition |
 |-------------|------------------|----------------|
-| | | |
+| 6 sensors - detect the black at any side | | |
 | | | |
 | | | |
 
