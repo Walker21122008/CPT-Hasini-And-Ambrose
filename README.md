@@ -1,6 +1,6 @@
-# Sumo Robot: [Robot Name]
+# Sumo Robot: Cheng 2.0
 
-**[Team Name]** — [Names]
+**Capaccino Assasino** — Hasini and Ambrose
 
 > *What does your robot do and how does it compete? If you added any extensions beyond the guided build, mention them here. Write this after the rest of the document is done.*
 
