@@ -10,20 +10,20 @@
 
 ### What the Robot Needs to Do
 
-## Startup Sequence
+#### Startup Sequence
  
 -  On button press, robot waits **3 seconds** before any movement begins
 -  After delay, robot enters **WANDER mode** as the default state
 ---
  
-## WANDER Mode (Default)
+#### WANDER Mode (Default)
  
 -  Robot moves forward continuously
 -  Robot rotates **every 5 seconds** while moving
 -  Wander resumes automatically after any non-terminal state resolves
 ---
  
-## Edge Detection - Front
+#### Edge Detection - Front
  
 **Trigger:** Any of the front photoresistors detect black (dohyo edge)
  
@@ -33,7 +33,7 @@
 -  Robot resumes forward movement
 ---
  
-## Edge Detection - Back
+#### Edge Detection - Back
  
 **Trigger:** Any of the back photoresistors detect black
  
@@ -41,7 +41,7 @@
 -  Resumes normal state after
 ---
  
-## Edge Detection - Side (Turn 90°)
+#### Edge Detection - Side (Turn 90°)
  
 **Trigger:** Side edge condition (feeds into the shared edge recovery box)
  
@@ -49,7 +49,7 @@
 -  Resumes normal state after
 ---
  
-## Conflict Priority - Edge + Opponent Detected
+#### Conflict Priority - Edge + Opponent Detected
  
 **Trigger:** Front edge detection AND opponent detected (front or back), or back edge detection AND opponent detected
  
@@ -61,7 +61,7 @@
 -  If **no** → resume wander
 ---
  
-## Opponent Detection - Back (Distance Sensor)
+#### Opponent Detection - Back (Distance Sensor)
  
 **Trigger:** Back distance sensor detects opponent
  
@@ -70,7 +70,7 @@
 -  Continues to "Close to opponent?" check
 ---
  
-## Opponent Detection — Front (Distance Sensor)
+#### Opponent Detection - Front (Distance Sensor)
  
 **Trigger:** Front distance sensor detects opponent
  
@@ -78,14 +78,14 @@
 -  Continues to "Close to opponent?" check
 ---
  
-## CHARGE Mode → Close Proximity Check
+#### CHARGE Mode → Close Proximity Check
  
 -  Robot evaluates whether opponent is **within close range**
 -  If **no** → continues charging, re-checks proximity
 -  If **yes** → enters **BRUTAL PUSH mode**
 ---
  
-## BRUTAL PUSH Mode
+#### BRUTAL PUSH Mode
  
 **Trigger:** Opponent confirmed close (ramp engaged)
  
