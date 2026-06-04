@@ -15,7 +15,7 @@
 
 ### System Architecture
 
-<img width="489" height="420" alt="image" src="https://github.com/user-attachments/assets/a7a8e0d0-b52f-4d37-b9d7-b723496a0752" />
+<img width="344" height="341" alt="image" src="https://github.com/user-attachments/assets/c85bfc5e-1b29-457b-9b25-cff29baf05be" />
 
 
 ### Circuit Design
