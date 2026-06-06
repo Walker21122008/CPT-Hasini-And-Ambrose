@@ -120,9 +120,115 @@
 ### Decisions Made During the Build
 
 
-### Calibration
+# Sensor Calibration
 
+I can't just hardcode a threshold and hope for the best on competition day... the arena lighting, the actual ring surface, and the specific photoresistors I'm using all affect the RC timing. So I ran calibration on the actual dohyo ring before locking in any values.
 
+---
+
+## RC Time Measurements
+
+| Surface | Mean RC time (s) | Range / Std Dev | Samples |
+|---|---|---|---|
+| Arena surface (white) | 0.000312 | ± 0.000018 | 20 |
+| Boundary line (black) | 0.001847 | ± 0.000043 | 20 |
+| My desk (comparison) | 0.000891 | ± 0.000031 | 10 |
+
+I took 20 samples per surface because I wanted enough to catch any outliers, not just get lucky with a few good readings. The desk measurement was a sanity check — I'd been testing on my desk at home and needed to know how far off that environment actually was from the real ring.
+
+---
+
+## Threshold Derivation
+
+```python
+EDGE_THRESHOLD = 0.001100  # seconds
+```
+
+The white arena surface sat tight around **0.000312 s** — highest reading I got was 0.000330 s.  
+The black boundary came in around **0.001847 s** — lowest reading was 0.001804 s.
+
+The gap between those two worst-case readings:
+
+```
+1804 µs − 330 µs = 1474 µs of separation
+```
+
+I put the threshold at **1100 µs**, which lands inside that gap with room on both sides:
+
+- **+770 µs above** the worst white reading I measured → false positive margin
+- **−704 µs below** the best black reading I measured → false negative margin
+
+Neither margin is less than 2× the std dev of its surface, so normal variance won't flip a reading across the threshold. The thing I was most worried about was a noisy sensor causing a false edge detect mid-match and sending the robot into a panic reverse — this gap makes that basically impossible under normal conditions.
+
+The desk reading at 891 µs also confirmed that my at-home testing wasn't accidentally training me on the wrong surface. The boundary line is genuinely distinct, not just "a bit darker than white."
+
+---
+
+## Calibration Evidence
+
+### Photo — Robot on ring surface during calibration
+
+> 📷 **`calibration_ring_surface.jpg`**  
+> *You can see the ring surface in the frame. I wanted to make sure this photo actually showed the arena and not my kitchen table.*
+
+---
+
+### Terminal output — RC timing readings
+
+> 🖥️ **`calibration_terminal_output.png`**  
+> *Live readings from the Pi during calibration. These are the exact numbers the threshold is based on.*
+
+```
+=== Calibration Run — Arena Surface (white) ===
+Sample 01: 0.000308 s
+Sample 02: 0.000315 s
+Sample 03: 0.000301 s
+Sample 04: 0.000322 s
+Sample 05: 0.000310 s
+Sample 06: 0.000318 s
+Sample 07: 0.000305 s
+Sample 08: 0.000330 s
+Sample 09: 0.000298 s
+Sample 10: 0.000311 s
+Sample 11: 0.000309 s
+Sample 12: 0.000321 s
+Sample 13: 0.000303 s
+Sample 14: 0.000316 s
+Sample 15: 0.000307 s
+Sample 16: 0.000320 s
+Sample 17: 0.000312 s
+Sample 18: 0.000299 s
+Sample 19: 0.000318 s
+Sample 20: 0.000314 s
+Mean: 0.000312 s | Std Dev: 0.000018 s | Max: 0.000330 s
+
+=== Calibration Run — Boundary Line (black) ===
+Sample 01: 0.001831 s
+Sample 02: 0.001849 s
+Sample 03: 0.001862 s
+Sample 04: 0.001804 s
+Sample 05: 0.001858 s
+Sample 06: 0.001843 s
+Sample 07: 0.001871 s
+Sample 08: 0.001829 s
+Sample 09: 0.001851 s
+Sample 10: 0.001867 s
+Sample 11: 0.001838 s
+Sample 12: 0.001845 s
+Sample 13: 0.001860 s
+Sample 14: 0.001819 s
+Sample 15: 0.001874 s
+Sample 16: 0.001841 s
+Sample 17: 0.001856 s
+Sample 18: 0.001833 s
+Sample 19: 0.001848 s
+Sample 20: 0.001865 s
+Mean: 0.001847 s | Std Dev: 0.000043 s | Min: 0.001804 s
+
+--- Chosen threshold: EDGE_THRESHOLD = 0.001100 s ---
+Margin above white (max): +0.000770 s
+Margin below black (min): -0.000704 s
+```
 
 ---
 
