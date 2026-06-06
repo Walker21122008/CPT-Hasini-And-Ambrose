@@ -168,15 +168,13 @@ The desk reading at 891 µs also confirmed that my at-home testing wasn't accide
 
 ### Photo — Robot on ring surface during calibration
 
-> 📷 **`calibration_ring_surface.jpg`**  
-> *You can see the ring surface in the frame. I wanted to make sure this photo actually showed the arena and not my kitchen table.*
+
 
 ---
 
 ### Terminal output — RC timing readings
 
-> 🖥️ **`calibration_terminal_output.png`**  
-> *Live readings from the Pi during calibration. These are the exact numbers the threshold is based on.*
+
 
 ```
 === Calibration Run — Arena Surface (white) ===
