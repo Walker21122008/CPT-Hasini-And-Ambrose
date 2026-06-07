@@ -55,7 +55,7 @@
  
 -  Photoresistor light sensor is **prioritized** over distance sensor signals
 -  Edge avoidance executes first before opponent engagement logic
-> **Branch point:** After edge/conflict resolution, check — is it the back sensor that triggered?
+> **Branch point:** After edge/conflict resolution, check - is it the back sensor that triggered?
  
 -  If **yes** (back sensor) → execute back-sensor-specific recovery
 -  If **no** → resume wander
