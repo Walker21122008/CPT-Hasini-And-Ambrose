@@ -97,7 +97,7 @@
 
 ### System Architecture
 
-<img width="444" height="441" alt="image" src="https://github.com/user-attachments/assets/c85bfc5e-1b29-457b-9b25-cff29baf05be" />
+<img width="644" height="641" alt="image" src="https://github.com/user-attachments/assets/c85bfc5e-1b29-457b-9b25-cff29baf05be" />
 
 
 ### Circuit Design
