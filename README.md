@@ -127,8 +127,68 @@
 
 ### Chassis
 
+### Original Build (Cheng 1.0)
+ 
+The first version followed the guided kit build:
+ 
+1. Motor brackets were attached to the MDF base plate
+2. Two yellow DC gear motors were mounted in the rear brackets
+3. Rubber wheels were press-fitted onto motor shafts
+4. A caster wheel was mounted at the rear for balance
+5. The breadboard was zip-tied flat on top of the base
+6. The Raspberry Pi was mounted on top of the breadboard layer, connected via a 40-pin GPIO ribbon cable
+No custom fabrication was used at this stage. The robot had no shielding, no ramps, and sensors were limited to the photoresistor array wired on the breadboard.
 
+### Cheng 2.0 Redesign
+ 
+Cheng 2.0 retains the core base plate and drive system but adds substantial structural and sensing upgrades. Ramps were added to both ends to deflect incoming robots. Cardboard-enforced shields were added on both sides to protect the motors and wheels. Sensors were redistributed to the perimeter rather than centralized on the breadboard.
+ 
+The new chassis assembly sequence:
+1. Retain base plate, motors, wheels, and caster from Cheng 1.0
+2. Attach 3D-printed ramps to front and rear edges of the base
+3. Cut and fold cardboard side shields; align flush with wheel height
+4. Mount distance sensors at the tip of each ramp (front + rear)
+5. Mount 6× photoresistor + 6× LED arrays along the bottom edge of each side shield (12 sensors + 12 LEDs total)
+6. Reinforce all ramp joints and shield seams with duct tape
+7. Re-route wiring from breadboard out to perimeter sensors
 
+#### Design Changes: Cheng 1.0 → Cheng 2.0
+ 
+| Feature | Cheng 1.0 | Cheng 2.0 | Reason |
+|---|---|---|---|
+| **Base platform** | Single flat MDF/cardboard layer | Same base + side wing extensions | Needed mounting surfaces for ramps and lateral sensors |
+| **Front/rear structure** | Open, no shielding | 3D-printed ramps on both ends | Deflects opponent robots up and over; improves pushing leverage |
+| **Side structure** | Bare, motors exposed | Cardboard-enforced shields both sides | Protects wheels and motors from side impacts |
+| **Distance sensors** | None | 2 distance sensors on either side | Opponent detection at range; enables CHARGE state trigger |
+| **Light sensors** | one at front | 6× photoresistor sensors per side (12 total, at base edge) | Full-perimeter boundary detection and detects the black tape |
+| **LEDs** | one at front | 6× LEDs per side (12 total) | Visual state feedback; paired with photoresistors for lighting up the shadow |
+| **Structural reinforcement** | Zip ties only | Duct tape on all ramp joints and shield seams | Fast field-repair; no tools required between rounds |
+| **Sensor placement** | All centralized on breadboard | Distributed to ramps and side shields | Moves detection to the robot's physical perimeter |
+| **Weight distribution** | Top-heavy (Pi + breadboard stacked) | Sensors moved low and outward | Lowers center of mass; harder to flip |
+
+#### Sensor Layout
+ 
+```
+        [FRONT]
+   ___________________
+   |  o o o o o o     |   ← 6× photoresistor + LED (right side, bottom edge)
+  /  [DIST SENSOR]    \   ← 3D-printed ramp
+ /                     \
+|  o o o o o o         |  
+|  [BREADBOARD + Pi]   |
+|                      | 
+ \                     /
+  \  [DIST SENSOR]    /   ← 3D-printed ramp
+   |    o o o o o o  |  ← 6× photoresistor + LED (left side, bottom edge)
+   -------------------
+        [REAR]
+```
+ 
+- **Distance sensors** face outward from each ramp; used to detect opponent in CHARGE range
+- **Photoresistors** are mounted along the bottom edge of the side shields; detect the white boundary line
+- **LEDs** are paired next to each photoresistor for active illumination and state visualization
+
+---
 ### Wiring
 
 
