@@ -102,6 +102,18 @@
 
 ### Circuit Design
 
+#### Here are the components we decided to use for our design
+- 4x motors
+- A push button
+- 6x LED
+- 6x Photoresistor light sensor
+- 2x Distance Sensor
+- 6x caps
+- 6x 200 Ohm Resistors
+- 2x L293D H-Bridge
+
+<img width="2880" height="2304" alt="Cheng 2 0 - top view (1)" src="https://github.com/user-attachments/assets/f01c1e03-4ab8-401d-8c73-4447c4af56fd" />
+
 
 ### Physical Layout
 
