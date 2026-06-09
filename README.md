@@ -1,9 +1,5 @@
 # Sumo Robot: Tung Tung Tung Sahur
 
-**The Double Duo** — Hasini and Ambrose
-
-> *What does your robot do and how does it compete? If you added any extensions beyond the guided build, mention them here. Write this after the rest of the document is done.*
-
 ---
 
 ## Design
@@ -127,7 +123,7 @@
 
 ### Chassis
 
-### Original Build (Cheng 1.0)
+### Original Build (Tung Tung Tung Sahur 1.0)
  
 The first version followed the guided kit build:
  
@@ -152,7 +148,7 @@ The new chassis assembly sequence:
 6. Reinforce all ramp joints and shield seams with duct tape
 7. Re-route wiring from breadboard out to perimeter sensors
 
-#### Design Changes: Cheng 1.0 → Cheng 2.0
+#### Design Changes: Tung Tung Tung Sahur 1.0 → Tung Tung Tung Sahur 2.0
  
 | Feature | Cheng 1.0 | Cheng 2.0 | Reason |
 |---|---|---|---|
@@ -164,7 +160,7 @@ The new chassis assembly sequence:
 | **LEDs** | one at front | 6× LEDs per side (12 total) | Visual state feedback; paired with photoresistors for lighting up the shadow |
 | **Structural reinforcement** | Zip ties only | Duct tape on all ramp joints and shield seams | Fast field-repair; no tools required between rounds |
 | **Sensor placement** | All centralized on breadboard | Distributed to ramps and side shields | Moves detection to the robot's physical perimeter |
-| **Weight distribution** | Top-heavy (Pi + breadboard stacked) | Sensors moved low and outward | Lowers center of mass; harder to flip |
+| **Weight distribution** | Top-heavy (Pi + breadboard stacked + double batteries stacked) | Sensors moved low and outward | Lowers center of mass; harder to flip |
 
 #### Sensor Layout
  
@@ -187,6 +183,10 @@ The new chassis assembly sequence:
 - **Distance sensors** face outward from each ramp; used to detect opponent in CHARGE range
 - **Photoresistors** are mounted along the bottom edge of the side shields; detect the white boundary line
 - **LEDs** are paired next to each photoresistor for active illumination and state visualization
+
+#### Design changes: Tung Tung Tung Sahur 2.0 → Tung Tung Tung Sahur 3.0
+After conversing with other groups to find out their weaknesses, we figured that almost every group was using a ramp like us. We figures that we had to prevent the other robots from gaining access to the wheels. so, we decided to put a barrier for the robot ramp at the base to protect itself from other robots. We also decided to use an LED Strip instead of the normal LED lights conected through a circuit since the LEDS weren't bright enough for us to test. Here is the prototype of our new design:
+
 
 ---
 ### Wiring
