@@ -1,6 +1,6 @@
-# Sumo Robot: Cheng 2.0
+# Sumo Robot: Tung Tung Tung Sahur
 
-**Capaccino Assasino** — Hasini and Ambrose
+**The Double Duo** — Hasini and Ambrose
 
 > *What does your robot do and how does it compete? If you added any extensions beyond the guided build, mention them here. Write this after the rest of the document is done.*
 
@@ -190,6 +190,18 @@ The new chassis assembly sequence:
 
 ---
 ### Wiring
+
+For the wiring, we decided to make it organized at the early stage itself by using only pink wires and lining them properly, ensuring that the wires wouldn't be plucked out accidentally during the match. 
+Here is the robot wiring at the early stage: 
+<img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/e973feff-c0d0-4e81-b107-bb8677f89d84" />
+In addition to that, we tried to test out how we can use a certain color wire for certain components that we were adding to our robot. For instance:
+- Motor: Blue and Purple
+- Distance sensor: Yellow, orange and red
+- Photoresistor light sensor: green
+Here is an example pic of our motor wiring:
+<img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/e64a538e-3248-4f10-a1a0-325cd4b37445" />
+
+Eventually, we decided to convert everything to pink wires instead since it felt much easier to deal with a bit and we could solder it much easily.
 
 
 
