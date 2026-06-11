@@ -1,108 +1,105 @@
 import RPi.GPIO as GPIO
 import time
 
-# ============================
+# ==================================================
 # PIN DEFINITIONS
-# ============================
+# ==================================================
 
-# Start button
-Button_Pin = 0      
+Button_Pin = 2
 
-# LED indicators
-LEDS = [ ]        
+# Front edge sensors
+FL = 3
+FC = 4
+FR = 17
 
-# Photoresistor pins
-FL = 0             
-FC = 0
-FR = 0
+# Back edge sensors
+BL = 27
+BC = 22
+BR = 10
 
-BL = 0
-BC = 0
-BR = 0
+# Motor pins
 
-# Left H-bridge
-FrontL_EN = 0
-FrontL_IN1 = 0
-FrontL_IN2 = 0
+FrontL_IN1 = 12
+FrontL_IN2 = 16
 
-RearL_EN = 0
-RearL_IN1 = 0
-RearL_IN2 = 0
+RearL_IN1 = 25
+RearL_IN2 = 24
 
-# Right H-bridge
-FrontR_EN = 0
-FrontR_IN1 = 0
-FrontR_IN2 = 0
+FrontR_IN1 = 20
+FrontR_IN2 = 21
 
-RearR_EN = 0
-RearR_IN1 = 0
-RearR_IN2 = 0
+RearR_IN1 = 7
+RearR_IN2 = 8
 
-# Distance sensors
-trigger_pin_front = 0       
+# Ultrasonic sensors
+
+trigger_pin_front = 0
 echo_pin_front = 0
 
-trigger_pin_back = 0        
+trigger_pin_back = 0
 echo_pin_back = 0
 
-# ============================
+# ==================================================
 # CONSTANTS
-# ============================
+# ==================================================
 
 THRESHOLD = 500
 
-WANDER_SPEED = 60
-ATTACK_SPEED = 85
-FULL_SPEED = 100
-
 START_DELAY = 3
+
+OPPONENT_DETECT = 40
+OPPONENT_CLOSE = 15
+
+TURN_90_TIME = 0.45
+TURN_180_TIME = 0.90
+
+FRONT_ESCAPE_TIME = 0.8
+BACK_ESCAPE_TIME = 1.2
 
 GPIO.setmode(GPIO.BCM)
 
-# ============================
-# LED SETUP
-# ============================
-
-for led in LEDS:
-    GPIO.setup(led, GPIO.OUT)
-    GPIO.output(led, GPIO.HIGH)
-
-# ============================
-# MOTOR SETUP
-# ============================
+# ==================================================
+# SETUP
+# ==================================================
 
 motor_pins = [
-    FrontL_IN1, FrontL_IN2, RearL_IN1, RearL_IN2,
-    FrontR_IN1, FrontR_IN2, RearR_IN1, RearR_IN2,
-    FrontL_EN, RearL_EN, FrontR_EN, RearR_EN
+    FrontL_IN1, FrontL_IN2,
+    RearL_IN1, RearL_IN2,
+    FrontR_IN1, FrontR_IN2,
+    RearR_IN1, RearR_IN2
 ]
 
 for pin in motor_pins:
-    GPIO.setup(pin, GPIO.OUT)
+    if pin != 0:
+        GPIO.setup(pin, GPIO.OUT)
 
-# PWM
-pwm_fl = GPIO.PWM(FrontL_EN, 1000)
-pwm_rl = GPIO.PWM(RearL_EN, 1000)
-pwm_fr = GPIO.PWM(FrontR_EN, 1000)
-pwm_rr = GPIO.PWM(RearR_EN, 1000)
+GPIO.setup(Button_Pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-for pwm in [pwm_fl, pwm_rl, pwm_fr, pwm_rr]:
-    pwm.start(0)
+GPIO.setup(trigger_pin_front, GPIO.OUT)
+GPIO.setup(echo_pin_front, GPIO.IN)
 
-# ============================
-# RC EDGE SENSORS
-# ============================
+GPIO.setup(trigger_pin_back, GPIO.OUT)
+GPIO.setup(echo_pin_back, GPIO.IN)
+
+# ==================================================
+# EDGE SENSOR FUNCTIONS
+# ==================================================
 
 def rc_time(pin):
+
     GPIO.setup(pin, GPIO.OUT)
     GPIO.output(pin, GPIO.LOW)
+
     time.sleep(0.001)
 
     GPIO.setup(pin, GPIO.IN)
+
     count = 0
 
     while GPIO.input(pin) == GPIO.LOW:
+
         count += 1
+
         if count > 5000:
             break
 
@@ -111,59 +108,112 @@ def rc_time(pin):
 def edge(pin):
     return rc_time(pin) > THRESHOLD
 
-def front_edge():
-    return edge(FL) or edge(FC) or edge(FR)
+def get_front_edge():
 
-def back_edge():
-    return edge(BL) or edge(BC) or edge(BR)
+    if edge(FL):
+        return "FL"
 
-# ============================
-# MOTOR HELPERS
-# ============================
+    if edge(FC):
+        return "FC"
 
-def set_speed(speed):
-    pwm_fl.ChangeDutyCycle(speed)
-    pwm_rl.ChangeDutyCycle(speed)
-    pwm_fr.ChangeDutyCycle(speed)
-    pwm_rr.ChangeDutyCycle(speed)
+    if edge(FR):
+        return "FR"
 
-def stop():
-    set_speed(0)
+    return None
 
-# ============================
-# DISTANCE SENSOR HELPERS
-# ============================
+def get_back_edge():
+
+    if edge(BL):
+        return "BL"
+
+    if edge(BC):
+        return "BC"
+
+    if edge(BR):
+        return "BR"
+
+    return None
+
+# ==================================================
+# ULTRASONIC FUNCTIONS
+# ==================================================
 
 def read_distance(trigger_pin, echo_pin):
+
     GPIO.output(trigger_pin, GPIO.LOW)
     time.sleep(0.000002)
+
     GPIO.output(trigger_pin, GPIO.HIGH)
     time.sleep(0.00001)
     GPIO.output(trigger_pin, GPIO.LOW)
 
     start_time = time.time()
+    timeout = start_time + 0.03
+
     while GPIO.input(echo_pin) == GPIO.LOW:
+
         start_time = time.time()
 
+        if start_time > timeout:
+            return 999
+
     stop_time = time.time()
+    timeout = stop_time + 0.03
+
     while GPIO.input(echo_pin) == GPIO.HIGH:
+
         stop_time = time.time()
 
+        if stop_time > timeout:
+            return 999
+
     elapsed = stop_time - start_time
+
     distance_cm = (elapsed * 34300) / 2
+
     return distance_cm
 
 def front_opponent_detected():
-    return read_distance(trigger_pin_front, echo_pin_front) < 40
+
+    return read_distance(
+        trigger_pin_front,
+        echo_pin_front
+    ) < OPPONENT_DETECT
 
 def back_opponent_detected():
-    return read_distance(trigger_pin_back, echo_pin_back) < 40
 
-# ============================
+    return read_distance(
+        trigger_pin_back,
+        echo_pin_back
+    ) < OPPONENT_DETECT
+
+def opponent_close():
+
+    return read_distance(
+        trigger_pin_front,
+        echo_pin_front
+    ) < OPPONENT_CLOSE
+
+# ==================================================
 # MOVEMENT
-# ============================
+# ==================================================
 
-def forward(speed):
+def stop():
+
+    GPIO.output(FrontL_IN1, GPIO.LOW)
+    GPIO.output(FrontL_IN2, GPIO.LOW)
+
+    GPIO.output(RearL_IN1, GPIO.LOW)
+    GPIO.output(RearL_IN2, GPIO.LOW)
+
+    GPIO.output(FrontR_IN1, GPIO.LOW)
+    GPIO.output(FrontR_IN2, GPIO.LOW)
+
+    GPIO.output(RearR_IN1, GPIO.LOW)
+    GPIO.output(RearR_IN2, GPIO.LOW)
+
+def forward():
+
     GPIO.output(FrontL_IN1, GPIO.HIGH)
     GPIO.output(FrontL_IN2, GPIO.LOW)
 
@@ -176,9 +226,8 @@ def forward(speed):
     GPIO.output(RearR_IN1, GPIO.HIGH)
     GPIO.output(RearR_IN2, GPIO.LOW)
 
-    set_speed(speed)
+def reverse():
 
-def reverse(speed):
     GPIO.output(FrontL_IN1, GPIO.LOW)
     GPIO.output(FrontL_IN2, GPIO.HIGH)
 
@@ -191,9 +240,8 @@ def reverse(speed):
     GPIO.output(RearR_IN1, GPIO.LOW)
     GPIO.output(RearR_IN2, GPIO.HIGH)
 
-    set_speed(speed)
+def turn_left():
 
-def turn_left(speed):
     GPIO.output(FrontL_IN1, GPIO.LOW)
     GPIO.output(FrontL_IN2, GPIO.HIGH)
 
@@ -206,9 +254,8 @@ def turn_left(speed):
     GPIO.output(RearR_IN1, GPIO.HIGH)
     GPIO.output(RearR_IN2, GPIO.LOW)
 
-    set_speed(speed)
+def turn_right():
 
-def turn_right(speed):
     GPIO.output(FrontL_IN1, GPIO.HIGH)
     GPIO.output(FrontL_IN2, GPIO.LOW)
 
@@ -221,83 +268,165 @@ def turn_right(speed):
     GPIO.output(RearR_IN1, GPIO.LOW)
     GPIO.output(RearR_IN2, GPIO.HIGH)
 
-    set_speed(speed)
+# ==================================================
+# RECOVERY
+# ==================================================
 
-# ============================
-# ACTIONS
-# ============================
+def front_escape(sensor):
 
-def front_escape():
-    print("Front edge!")
-    reverse(ATTACK_SPEED)
-    time.sleep(0.8)
-    turn_right(ATTACK_SPEED)
-    time.sleep(0.5)
+    print("Front edge:", sensor)
+
+    reverse()
+    time.sleep(FRONT_ESCAPE_TIME)
+
+    if sensor == "FL":
+
+        turn_right()
+        time.sleep(TURN_180_TIME)
+
+    elif sensor == "FR":
+
+        turn_left()
+        time.sleep(TURN_180_TIME)
+
+    else:
+
+        turn_right()
+        time.sleep(TURN_180_TIME)
+
     stop()
+    time.sleep(0.2)
 
 def back_escape():
-    print("Back edge!")
-    forward(ATTACK_SPEED)
-    time.sleep(0.8)
 
-def charge():
-    forward(FULL_SPEED)
+    print("Back edge")
+
+    forward()
+    time.sleep(BACK_ESCAPE_TIME)
+
+def side_escape():
+
+    turn_right()
+    time.sleep(TURN_90_TIME)
+
+# ==================================================
+# ATTACK
+# ==================================================
 
 def brutal_push():
-    print("Brutal push")
-    for _ in range(3):
-        forward(FULL_SPEED)
-        time.sleep(0.7)
-        reverse(70)
-        time.sleep(0.2)
 
-# ============================
-# WANDER MODE
-# ============================
+    print("BRUTAL PUSH")
+
+    for _ in range(3):
+
+        forward()
+        time.sleep(0.7)
+
+        reverse()
+        time.sleep(0.25)
+
+def charge():
+
+    while True:
+
+        if get_front_edge():
+            return
+
+        if get_back_edge():
+            return
+
+        forward()
+
+        if opponent_close():
+
+            brutal_push()
+            return
+
+def engage_back_opponent():
+
+    turn_right()
+    time.sleep(TURN_180_TIME)
+
+    charge()
+
+# ==================================================
+# WANDER
+# ==================================================
 
 last_turn = time.time()
 
 def wander():
+
     global last_turn
-    forward(WANDER_SPEED)
+
+    forward()
 
     if time.time() - last_turn > 5:
-        turn_right(WANDER_SPEED)
+
+        turn_right()
         time.sleep(0.5)
+
         last_turn = time.time()
 
-# ============================
-# MAIN LOGIC
-# ============================
+# ==================================================
+# MAIN
+# ==================================================
 
 print("Waiting for start button...")
-
-GPIO.setup(Button_Pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 while GPIO.input(Button_Pin) == GPIO.HIGH:
     time.sleep(0.01)
 
-print("Button pressed! Starting in 3 seconds...")
+print("Button pressed.")
+print("Starting in 3 seconds...")
+
 time.sleep(START_DELAY)
 
-while True:
+try:
 
-    if front_edge():
-        front_escape()
+    while True:
 
-    elif back_edge():
-        back_escape()
+        front_edge = get_front_edge()
+        back_edge = get_back_edge()
 
-    elif front_opponent_detected():
-        charge()
+        # ------------------------------------------
+        # EDGE PRIORITY (ALSO HANDLES CONFLICTS)
+        # ------------------------------------------
 
-    elif back_opponent_detected():
-        turn_right(80)
-        time.sleep(1.0)
-        charge()
+        if front_edge:
 
-    else:
+            front_escape(front_edge)
+            continue
+
+        if back_edge:
+
+            back_escape()
+            continue
+
+        # ------------------------------------------
+        # OPPONENT DETECTION
+        # ------------------------------------------
+
+        if front_opponent_detected():
+
+            charge()
+            continue
+
+        if back_opponent_detected():
+
+            engage_back_opponent()
+            continue
+
+        # ------------------------------------------
+        # DEFAULT
+        # ------------------------------------------
+
         wander()
+
+except KeyboardInterrupt:
+
+    stop()
+    GPIO.cleanup()
 
 
 
