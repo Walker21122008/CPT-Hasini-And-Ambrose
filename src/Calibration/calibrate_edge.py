@@ -2,7 +2,7 @@ import time
 import statistics
 import RPi.GPIO as GPIO
 
-PIN = 3      # change to whichever photoresistor pin you want
+PIN = 3     
 SAMPLES = 100
 
 GPIO.setmode(GPIO.BCM)
