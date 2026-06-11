@@ -132,8 +132,7 @@ The first version followed the guided kit build:
 3. Rubber wheels were press-fitted onto motor shafts
 4. A caster wheel was mounted at the rear for balance
 5. The breadboard was zip-tied flat on top of the base
-6. The Raspberry Pi was mounted on top of the breadboard layer, connected via a 40-pin GPIO ribbon cable
-No custom fabrication was used at this stage. The robot had no shielding, no ramps, and sensors were limited to the photoresistor array wired on the breadboard.
+6. The Raspberry Pi was mounted below the breadboard layer, connected via a 40-pin GPIO ribbon cable. The robot had no shielding, no ramps, and sensors were limited to only one photoresistor sensor
 
 <img width="2000" height="1381" alt="image" src="https://github.com/user-attachments/assets/63114055-48d1-4f0a-b323-503f48419b69" />
 
@@ -212,10 +211,44 @@ Eventually, we decided to convert everything to pink wires instead since it felt
 
 ### Decisions Made During the Build
 
+A running record of every decision made during the redesign of Cheng 1.0 into our competition sumo bot.
+
+---
+ 
+## Change 1 - Chassis Redesign: Ramp Bot
+ 
+We replaced the original flat chassis with a ramp-style design. Angled ramps were added to the front and rear of the robot so that when we make contact with an opponent, their chassis rides up our ramp instead of pushing back flat against us. This shifts the contact force downward and makes it much harder for the opponent to get traction against us.
+ 
+The side shields were also reinforced with cardboard and duct tape to protect the motors and wheels from side impacts.
+ 
+---
+ 
+## Change 2 - Strategy: Prioritize Weight and Ramming
+ 
+After talking with other teams and assessing their designs, we identified our best path to winning: be the heaviest robot in the ring and ram aggressively. Lighter, faster bots lose traction when hit by something heavier moving at full speed. Our strategy leans into this — rather than trying to out-maneuver opponents, we charge straight at them and rely on mass and motor force to push them out.
+ 
+This influenced hardware choices throughout the rest of the build (more motors, heavier shielding, second battery).
+ 
+---
+ 
+## Change 3 - Added a Second Battery + Two Breadboards
+ 
+**Battery:** The original single battery pack was not enough to power all four motors at competitive speed. We added a second battery dedicated to the motors, keeping the Pi on its own power rail. Running everything off one pack caused voltage sag under load, which slowed the motors at the worst possible moment.
+ 
+**Breadboards:** We switched from one breadboard to two. The original single breadboard became too cramped once we added the second H-bridge, the capacitors, and all the sensor wiring. Splitting across two boards gave us room to organize motor driver wiring on one side and sensor wiring on the other, which made debugging significantly easier.
+ 
+---
+ 
+## Change 4 - Ran Out of GPIO Pins
+ 
+The Raspberry Pi does not have enough GPIO pins to directly drive 4 motors (via 2× L293D), read 6 photoresistors, read 2 distance sensors, and control 6 LEDs all at once. We hit this limit during wiring.
+ 
+**Resolution:** We decided to not use the LEDS and instead use our own personal LED strip instead.
+
 
 # Sensor Calibration
 
-I can't just hardcode a threshold and hope for the best on competition day... the arena lighting, the actual ring surface, and the specific photoresistors I'm using all affect the RC timing. So I ran calibration on the actual dohyo ring before locking in any values.
+I can't just hardcode a threshold and hope for the best on competition day... the arena lighting, the actual ring surface, and the specific photoresistors I'm using all affect the RC timing. So I ran calibration on the actual ring before locking in any values.
 
 ---
 
