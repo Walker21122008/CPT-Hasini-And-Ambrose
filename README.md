@@ -358,6 +358,225 @@ Margin below black (min): -0.000704 s
 ---
 
 ## Code
+# Code
+
+The full source code is stored in the `src/` directory. The project is organized into separate modules so that motor control, sensors, and robot strategy are independent of each other. This makes the code easier to test, maintain, and extend.
+
+## Project Structure
+
+```text
+src/
+├── main.py           — Program entry point and startup logic
+├── robot.py          — Main robot strategy and decision-making
+├── motors.py         — Motor control functions
+├── ultrasonic.py     — Ultrasonic distance sensor class
+├── edge_sensors.py   — Photoresistor edge detection system
+└── config.py         — Pin assignments and constants
+```
+
+---
+
+# Edge Detection
+
+The edge detection system prevents the robot from driving outside the sumo ring. It uses photoresistor sensors positioned around the robot.
+
+```python
+def front_edge(self):
+
+    if self.detected(config.FL):
+        return "FL"
+
+    if self.detected(config.FC):
+        return "FC"
+
+    if self.detected(config.FR):
+        return "FR"
+
+    return None
+```
+
+### Explanation
+
+The robot checks the front sensors one at a time and immediately returns the first sensor that detects the white boundary.
+
+A design decision was made to return the sensor identifier instead of a simple True/False value. This allows the recovery system to know which side of the robot reached the edge and choose the safest escape maneuver.
+
+For example:
+
+* Left sensor triggered → reverse and turn right.
+* Right sensor triggered → reverse and turn left.
+* Center sensor triggered → reverse and rotate away from danger.
+
+This approach keeps sensing and recovery separate. The sensor code only reports what happened, while the recovery code decides what action to take.
+
+---
+
+# Opponent Detection and Attack
+
+The robot uses front and rear ultrasonic sensors to locate opponents.
+
+```python
+front_distance = self.front_ultra.distance()
+back_distance = self.back_ultra.distance()
+
+if front_distance < config.OPPONENT_DETECT:
+
+    self.charge_front()
+
+    if front_distance < config.OPPONENT_CLOSE:
+        self.brutal_push()
+
+    continue
+
+if back_distance < config.OPPONENT_DETECT:
+
+    self.charge_back()
+
+    continue
+```
+
+### Explanation
+
+The robot continuously measures distance in front and behind itself.
+
+Two thresholds are used:
+
+* `OPPONENT_DETECT` identifies that an opponent exists nearby.
+* `OPPONENT_CLOSE` indicates that the robot has reached pushing distance.
+
+Using two thresholds allows different behaviours:
+
+1. Search and approach when an opponent is detected.
+2. Switch to aggressive pushing when close enough.
+
+This prevents the robot from constantly performing push manoeuvres while still far away.
+
+If an opponent is detected behind the robot, it first rotates approximately 180 degrees before attacking. This keeps the wedge or front pushing surface aimed at the opponent.
+
+---
+
+# Main Loop
+
+The robot operates as a priority-based behaviour system.
+
+```python
+while True:
+
+    front_edge = self.edges.front_edge()
+    back_edge = self.edges.back_edge()
+
+    if front_edge:
+
+        self.front_escape(front_edge)
+        continue
+
+    if back_edge:
+
+        self.back_escape()
+        continue
+
+    front_distance = self.front_ultra.distance()
+    back_distance = self.back_ultra.distance()
+
+    if front_distance < config.OPPONENT_DETECT:
+
+        self.charge_front()
+        continue
+
+    if back_distance < config.OPPONENT_DETECT:
+
+        self.charge_back()
+        continue
+
+    self.wander()
+```
+
+### Explanation
+
+The robot follows a strict priority order:
+
+1. Edge avoidance
+2. Opponent attack
+3. Search behaviour
+
+The most important design decision was giving edge sensors higher priority than opponent detection.
+
+If the robot detects both an opponent and the ring boundary at the same time, the edge response always executes first. Losing sight of an opponent is preferable to driving out of the arena and losing the match.
+
+When neither an edge nor an opponent is detected, the robot enters a wandering mode where it moves forward and periodically rotates. This increases arena coverage and helps locate opponents.
+
+Rather than implementing a complex state machine, a priority-based loop was chosen because the robot has only three primary behaviours and the logic remains easier to read.
+
+---
+
+# Recovery Behaviour
+
+When an edge is detected, the robot performs a recovery manoeuvre.
+
+```python
+def front_escape(self, sensor):
+
+    self.motors.reverse()
+
+    time.sleep(config.FRONT_ESCAPE_TIME)
+
+    if sensor == "FL":
+
+        self.motors.turn_right()
+
+    elif sensor == "FR":
+
+        self.motors.turn_left()
+
+    else:
+
+        self.motors.turn_right()
+
+    time.sleep(config.TURN_180_TIME)
+
+    self.motors.stop()
+```
+
+### Explanation
+
+The robot first creates distance from the edge by reversing.
+
+The turning direction depends on which sensor detected the boundary. Turning away from the triggered sensor reduces the chance of immediately encountering the edge again.
+
+The timings were experimentally tuned so that the robot reliably re-enters the arena before resuming normal operation.
+
+---
+
+# GPIO Cleanup
+
+```python
+robot = SumoRobot()
+
+try:
+    robot.run()
+
+except KeyboardInterrupt:
+    print("Program interrupted.")
+
+finally:
+    robot.cleanup()
+```
+
+### Explanation
+
+The cleanup procedure stops all motors and releases the Raspberry Pi GPIO pins.
+
+Without cleanup, GPIO outputs may remain in their previous state after the program exits. This can cause motors to continue receiving signals or leave pins configured incorrectly for the next execution.
+
+Using a `finally` block guarantees cleanup runs regardless of how the program terminates.
+
+`except KeyboardInterrupt` only handles the user pressing Ctrl+C. It does not handle unexpected errors such as:
+
+* Sensor failures
+* Programming mistakes
+* Runtime exceptions
+
+Because `finally` executes after both successful execution and exceptions, it provides a safer way to ensure the robot always shuts down correctly.
 
 
 ## Competition & Reflection
