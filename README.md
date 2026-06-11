@@ -135,6 +135,9 @@ The first version followed the guided kit build:
 6. The Raspberry Pi was mounted on top of the breadboard layer, connected via a 40-pin GPIO ribbon cable
 No custom fabrication was used at this stage. The robot had no shielding, no ramps, and sensors were limited to the photoresistor array wired on the breadboard.
 
+<img width="2000" height="1381" alt="image" src="https://github.com/user-attachments/assets/63114055-48d1-4f0a-b323-503f48419b69" />
+
+
 ### Cheng 2.0 Redesign
  
 Cheng 2.0 retains the core base plate and drive system but adds substantial structural and sensing upgrades. Ramps were added to both ends to deflect incoming robots. Cardboard-enforced shields were added on both sides to protect the motors and wheels. Sensors were redistributed to the perimeter rather than centralized on the breadboard.
