@@ -93,7 +93,7 @@
 
 ### System Architecture
 
-<img width="644" height="641" alt="image" src="https://github.com/user-attachments/assets/c85bfc5e-1b29-457b-9b25-cff29baf05be" />
+<img width="348" height="342" alt="image" src="https://github.com/user-attachments/assets/9e31ce9c-e5a5-4b6c-9516-61a376986f14" />
 
 
 ### Circuit Design
@@ -149,6 +149,8 @@ The new chassis assembly sequence:
 7. Re-route wiring from breadboard out to perimeter sensors
 
 #### Design Changes: Tung Tung Tung Sahur 1.0 → Tung Tung Tung Sahur 2.0
+<img width="1880" height="1304" alt="Cheng 2 0 - top view" src="https://github.com/user-attachments/assets/1158f446-8300-41b6-9731-b9976e2665d4" />
+
  
 | Feature | Cheng 1.0 | Cheng 2.0 | Reason |
 |---|---|---|---|
@@ -185,7 +187,7 @@ The new chassis assembly sequence:
 - **LEDs** are paired next to each photoresistor for active illumination and state visualization
 
 #### Design changes: Tung Tung Tung Sahur 2.0 → Tung Tung Tung Sahur 3.0
-After conversing with other groups to find out their weaknesses, we figured that almost every group was using a ramp like us. We figures that we had to prevent the other robots from gaining access to the wheels. so, we decided to put a barrier for the robot ramp at the base to protect itself from other robots. We also decided to use an LED Strip instead of the normal LED lights conected through a circuit since the LEDS weren't bright enough for us to test. Here is the prototype of our new design:
+After conversing with other groups to find out their weaknesses, we figured that almost every group was using a ramp like us. We figured that we had to prevent the other robots from gaining access to the wheels. So, we decided to put a barrier for the robot ramp at the base to protect it from other robots. We also decided to use an LED Strip instead of the normal LED lights connected through a circuit since the LEDS weren't bright enough for us to test. Here is the prototype of our new design:
 
 
 ---
