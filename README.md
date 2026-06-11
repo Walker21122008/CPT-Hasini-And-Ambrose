@@ -198,15 +198,16 @@ After conversing with other groups to find out their weaknesses, we figured that
 For the wiring, we decided to make it organized at the early stage itself by using only pink wires and lining them properly, ensuring that the wires wouldn't be plucked out accidentally during the match. 
 Here is the robot wiring at the early stage: 
 <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/e973feff-c0d0-4e81-b107-bb8677f89d84" />
-In addition to that, we tried to test out how we can use a certain color wire for certain components that we were adding to our robot. For instance:
+In addition to that, we tried to test out how we can use a certain colour wire for certain components that we were adding to our robot. For instance:
 - Motor: Blue and Purple
 - Distance sensor: Yellow, orange and red
 - Photoresistor light sensor: green
 Here is an example pic of our motor wiring:
 <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/e64a538e-3248-4f10-a1a0-325cd4b37445" />
 
-Eventually, we decided to convert everything to pink wires instead since it felt much easier to deal with a bit and we could solder it much easily.
+Eventually, we decided to convert everything to pink wires instead since it felt much easier to deal with a bit, and we could solder it much more easily. We just decided to keep the wiring for the components like the motor, distance sensor and photoresistor light sensor different colours and duct tape the pairs together to make it organized. Here is the final image of our wiring.
 
+<img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/72a9f328-3347-4859-9193-e2435b9ae34d" />
 
 
 ### Decisions Made During the Build
