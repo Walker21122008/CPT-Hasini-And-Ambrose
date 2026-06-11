@@ -2,7 +2,11 @@ import time
 import statistics
 import RPi.GPIO as GPIO
 
-PIN = 3     
+# Front Sensors
+FL = 3
+FC = 4
+FR = 17
+
 SAMPLES = 100
 
 GPIO.setmode(GPIO.BCM)
@@ -27,24 +31,78 @@ def rc_time(pin):
 
     return count
 
-readings = []
+try:
 
-print("Collecting samples...")
+    fl_readings = []
+    fc_readings = []
+    fr_readings = []
 
-for _ in range(SAMPLES):
+    print(f"Collecting {SAMPLES} samples...\n")
 
-    value = rc_time(PIN)
+    for i in range(SAMPLES):
 
-    readings.append(value)
+        fl = rc_time(FL)
+        fc = rc_time(FC)
+        fr = rc_time(FR)
 
-    print(value)
+        fl_readings.append(fl)
+        fc_readings.append(fc)
+        fr_readings.append(fr)
 
-    time.sleep(0.05)
+        print(
+            f"Sample {i+1:3d} | "
+            f"FL={fl:4d} "
+            f"FC={fc:4d} "
+            f"FR={fr:4d}"
+        )
 
-print("\nResults")
-print("Mean:", statistics.mean(readings))
-print("Min:", min(readings))
-print("Max:", max(readings))
-print("Std Dev:", statistics.stdev(readings))
+        time.sleep(0.05)
 
-GPIO.cleanup()
+    print("\n============================")
+    print("CALIBRATION RESULTS")
+    print("============================\n")
+
+    sensors = {
+        "FL": fl_readings,
+        "FC": fc_readings,
+        "FR": fr_readings
+    }
+
+    for name, values in sensors.items():
+
+        print(f"{name}")
+
+        print(
+            f"  Mean    : "
+            f"{statistics.mean(values):.2f}"
+        )
+
+        print(
+            f"  Min     : "
+            f"{min(values)}"
+        )
+
+        print(
+            f"  Max     : "
+            f"{max(values)}"
+        )
+
+        print(
+            f"  Std Dev : "
+            f"{statistics.stdev(values):.2f}"
+        )
+
+        print()
+
+    overall_mean = statistics.mean(
+        fl_readings + fc_readings + fr_readings
+    )
+
+    print(
+        f"Overall Mean = "
+        f"{overall_mean:.2f}"
+    )
+
+finally:
+
+    GPIO.cleanup()
