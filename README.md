@@ -543,16 +543,54 @@ Using a `finally` block guarantees cleanup runs regardless of how the program te
 Because `finally` executes after both successful execution and exceptions, it provides a safer way to ensure the robot always shuts down correctly.
 
 
-## Competition & Reflection
+# Competition & Reflection
 
-### Results
+## Results
 
+| Round   | Placement | Bonus Points | Round Total |
+| ------- | --------- | ------------ | ----------- |
+| Round 1 | Last      | 0            | 0           |
+| Round 2 | —         | 2            | 2           |
+| Round 3 | —         | 2            | 2           |
+| **Total** |         |              | **4**       |
 
-### What Worked
+---
 
+## What Worked
 
-### What Failed
+**Sensor system held up completely.** All six photoresistors and both ultrasonic sensors functioned correctly throughout all three rounds. The RC timing calibration approach paid off here — because the threshold was derived from measured data rather than guessing, the edge detection stayed reliable even under the arena's specific lighting conditions. No false positives or missed detections were recorded.
 
+**Wiring survived the rounds.** The decision to consolidate onto pink wire, solder connections, and duct tape wire pairs together meant nothing came loose during matches. This was a real risk with a robot that takes impacts, and it held.
 
-### Next Iteration
+**Ramp geometry worked as intended.** In rounds where the robot made contact, the angled ramps deflected opponents upward rather than absorbing force flat-on. The physics of the design was sound — the problem was getting to contact in the first place.
+
+---
+
+## What Failed
+
+### 1. H-Bridge Chip Failure — Two Motors Lost
+
+Two of the four drive motors stopped working between Round 1 and the rest of the competition. The root cause was a burned L293D H-bridge chip.
+
+The L293D has a continuous current rating of 600mA per channel and a peak of 1.2A. Under load — especially when the robot strained against its own weight or made contact with an opponent — the motors drew more current than the chip could sustain. Heat built up, the chip degraded, and two motor channels failed. Running all four motors off the same chip without any heatsinking accelerated this.
+
+With only two functioning motors, the robot lost differential drive symmetry. Turning was unreliable and forward thrust was cut roughly in half.
+
+### 2. Robot Too Heavy to Move Effectively
+
+The second battery pack, reinforced cardboard shields, duct tape layering, and the LED strip added weight that the drive system wasn't sized for. The motors and wheels were carried over from Cheng 1.0, which had none of that additional mass.
+
+The result was that the motors struggled to accelerate the robot from a standstill, especially on the slightly textured arena surface. The ramming strategy depended entirely on building speed before contact — a robot that can barely move can't execute that strategy. The weight distribution changes that were meant to lower the center of mass ended up working against mobility instead.
+
+---
+
+## Next Iteration
+
+### 1. Replace L293D with TB6612FNG Motor Drivers
+
+The TB6612FNG handles 1.2A continuous and 3.2A peak per channel, runs cooler, and has a lower internal resistance than the L293D. Two TB6612FNG boards (one per motor pair) would give each channel enough headroom to handle stall current without cooking the chip. This directly addresses the H-bridge failure — the L293D was simply undersized for four motors under competition load.
+
+### 2. Weight Audit Before Final Build Lock
+
+Before the next competition build is finalized, every component gets weighed and the total is checked against what the motors can actually move. The gear motors used have a rated stall torque, and that number should be the ceiling — not something discovered on competition day. If the build exceeds roughly 70% of stall torque at normal load, either the motors get upgraded or components get cut. The second battery and shields are worth keeping; the places to trim are redundant duct tape layers and any structural cardboard that isn't load-bearing.
 
