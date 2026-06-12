@@ -140,15 +140,26 @@ After conversing with other groups to find out their weaknesses, we figured that
 ---
 ### Wiring
 
-For the wiring, we decided to make it organized at the early stage itself by using only pink wires and lining them properly, ensuring that the wires wouldn't be plucked out accidentally during the match. 
-Here is the robot wiring at the early stage: 
+Wiring was organized from the early stage by using only pink wires for the main harness, laid flat and routed along the chassis edge to reduce the chance of a wire getting snagged or pulled free during a match.
+
 <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/e973feff-c0d0-4e81-b107-bb8677f89d84" />
-In addition to that, we tried to test out how we can use a certain colour wire for certain components that we were adding to our robot. For instance:
-- Motor: Blue and Purple
-- Distance sensor: Yellow, orange and red
-- Photoresistor light sensor: green
-Here is an example pic of our motor wiring:
+Early wiring stage. 
+
+The CanaKit GPIO breakout is connected to the left breadboard. Photoresistors (amber, center-left column) and resistors are inserted but not yet routed to the second board. The two L293D H-bridge ICs are visible on the right breadboard, not yet wired to motors.
+
+In parallel with the main harness, we tested color-coded wiring for each component type to make individual signals easier to trace during debugging:
+
+
+Motors: blue and purple
+Distance sensors: yellow, orange, and red
+Photoresistor light sensors: green
+
 <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/e64a538e-3248-4f10-a1a0-325cd4b37445" />
+Motor wiring test with color-coded leads. 
+
+Blue and purple wires connect to both motor terminals on each side. 
+
+Eventually we converted the full harness to pink wire since it was easier to solder in bulk and available in sufficient quantity. The component leads (motors, distance sensors, photoresistors) kept their color coding to preserve traceability, and pairs were secured together with electrical tape rather than duct tape for a cleaner finish that was less likely to leave residue on the breadboard connections.
 
 Eventually, we decided to convert everything to pink wires instead since it felt much easier to deal with a bit, and we could solder it much more easily. We just decided to keep the wiring for the components like the motor, distance sensor and photoresistor light sensor different colours and duct tape the pairs together to make it organized. Here is the final image of our wiring.
 
