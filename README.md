@@ -562,7 +562,7 @@ Because `finally` executes after both successful execution and exceptions, it pr
 
 **Wiring survived the rounds.** The decision to consolidate onto pink wire, solder connections, and duct tape wire pairs together meant nothing came loose during matches. This was a real risk with a robot that takes impacts, and it held.
 
-**Ramp geometry worked as intended.** In rounds where the robot made contact, the angled ramps deflected opponents upward rather than absorbing force flat-on. The physics of the design was sound — the problem was getting to contact in the first place.
+**Robot was to hold up the two batteries** 
 
 ---
 
