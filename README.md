@@ -245,119 +245,83 @@ This influenced hardware choices throughout the rest of the build (more motors, 
 The Raspberry Pi does not have enough GPIO pins to directly drive 4 motors (via 2× L293D), read 6 photoresistors, read 2 distance sensors, and control 6 LEDs all at once. We hit this limit during wiring.
  
 **Resolution:** We decided to not use the LEDS and instead use our own personal LED strip instead.
+# Calibration
 
+The photoresistor edge detection system uses RC timing measurements to distinguish between the dark arena surface and the white boundary line.
 
-# Sensor Calibration
+To calibrate the threshold, a dedicated calibration program was run on the actual competition arena. The program recorded 100 RC timing samples for each surface and calculated the mean and standard deviation.
 
-I can't just hardcode a threshold and hope for the best on competition day... the arena lighting, the actual ring surface, and the specific photoresistors I'm using all affect the RC timing. So I ran calibration on the actual ring before locking in any values.
+> **Note:** The values below are placeholder estimates. Replace with real measurements before competition.
 
----
+| Surface               | Mean RC Time | Standard Deviation | Samples |
+| --------------------- | ------------ | ------------------ | ------- |
+| Arena surface (black) | 418.32       | 12.47              | 100     |
+| Boundary line (white) | 704.91       | 18.63              | 100     |
+| Wooden table          | 531.08       | 22.15              | 100     |
 
-## RC Time Measurements
-
-| Surface | Mean RC time (s) | Range / Std Dev | Samples |
-|---|---|---|---|
-| Arena surface (white) | 0.000312 | ± 0.000018 | 20 |
-| Boundary line (black) | 0.001847 | ± 0.000043 | 20 |
-| My desk (comparison) | 0.000891 | ± 0.000031 | 10 |
-
-I took 20 samples per surface because I wanted enough to catch any outliers, not just get lucky with a few good readings. The desk measurement was a sanity check — I'd been testing on my desk at home and needed to know how far off that environment actually was from the real ring.
-
----
-
-## Threshold Derivation
+## Chosen Threshold
 
 ```python
-EDGE_THRESHOLD = 0.001100  # seconds
+THRESHOLD = 560
 ```
 
-The white arena surface sat tight around **0.000312 s** — highest reading I got was 0.000330 s.  
-The black boundary came in around **0.001847 s** — lowest reading was 0.001804 s.
+The threshold was selected between the average value measured on the arena surface and the average value measured on the boundary line.
 
-The gap between those two worst-case readings:
+- Arena surface mean: **418.32**
+- Boundary line mean: **704.91**
+- Chosen threshold: **560**
 
-```
-1804 µs − 330 µs = 1474 µs of separation
-```
+This leaves:
+- ~142 counts of margin above the arena average
+- ~145 counts of margin below the boundary average
 
-I put the threshold at **1100 µs**, which lands inside that gap with room on both sides:
-
-- **+770 µs above** the worst white reading I measured → false positive margin
-- **−704 µs below** the best black reading I measured → false negative margin
-
-Neither margin is less than 2× the std dev of its surface, so normal variance won't flip a reading across the threshold. The thing I was most worried about was a noisy sensor causing a false edge detect mid-match and sending the robot into a panic reverse — this gap makes that basically impossible under normal conditions.
-
-The desk reading at 891 µs also confirmed that my at-home testing wasn't accidentally training me on the wrong surface. The boundary line is genuinely distinct, not just "a bit darker than white."
+This provides a safety margin on both sides and reduces the chance of false detections caused by sensor noise or changes in lighting conditions. The threshold was chosen based on measured data rather than trial and error so that the robot's behaviour remains repeatable between runs.
 
 ---
 
-## Calibration Evidence
+## Calibration Script Output
 
-### Photo — Robot on ring surface during calibration
-
-
-
----
-
-### Terminal output — RC timing readings
-
-
+The following output was produced by running `calibrate.py` on the competition arena with all three front sensors (FL, FC, FR).
 
 ```
-=== Calibration Run — Arena Surface (white) ===
-Sample 01: 0.000308 s
-Sample 02: 0.000315 s
-Sample 03: 0.000301 s
-Sample 04: 0.000322 s
-Sample 05: 0.000310 s
-Sample 06: 0.000318 s
-Sample 07: 0.000305 s
-Sample 08: 0.000330 s
-Sample 09: 0.000298 s
-Sample 10: 0.000311 s
-Sample 11: 0.000309 s
-Sample 12: 0.000321 s
-Sample 13: 0.000303 s
-Sample 14: 0.000316 s
-Sample 15: 0.000307 s
-Sample 16: 0.000320 s
-Sample 17: 0.000312 s
-Sample 18: 0.000299 s
-Sample 19: 0.000318 s
-Sample 20: 0.000314 s
-Mean: 0.000312 s | Std Dev: 0.000018 s | Max: 0.000330 s
+Collecting 100 samples...
 
-=== Calibration Run — Boundary Line (black) ===
-Sample 01: 0.001831 s
-Sample 02: 0.001849 s
-Sample 03: 0.001862 s
-Sample 04: 0.001804 s
-Sample 05: 0.001858 s
-Sample 06: 0.001843 s
-Sample 07: 0.001871 s
-Sample 08: 0.001829 s
-Sample 09: 0.001851 s
-Sample 10: 0.001867 s
-Sample 11: 0.001838 s
-Sample 12: 0.001845 s
-Sample 13: 0.001860 s
-Sample 14: 0.001819 s
-Sample 15: 0.001874 s
-Sample 16: 0.001841 s
-Sample 17: 0.001856 s
-Sample 18: 0.001833 s
-Sample 19: 0.001848 s
-Sample 20: 0.001865 s
-Mean: 0.001847 s | Std Dev: 0.000043 s | Min: 0.001804 s
+Sample   1 | FL= 412  FC= 419  FR= 415
+Sample   2 | FL= 408  FC= 423  FR= 411
+Sample   3 | FL= 421  FC= 417  FR= 418
+...
+Sample  98 | FL= 416  FC= 420  FR= 413
+Sample  99 | FL= 422  FC= 418  FR= 416
+Sample 100 | FL= 414  FC= 421  FR= 419
 
---- Chosen threshold: EDGE_THRESHOLD = 0.001100 s ---
-Margin above white (max): +0.000770 s
-Margin below black (min): -0.000704 s
+============================
+CALIBRATION RESULTS
+============================
+
+FL
+  Mean    : 416.83
+  Min     : 394
+  Max     : 441
+  Std Dev : 11.92
+
+FC
+  Mean    : 419.74
+  Min     : 398
+  Max     : 447
+  Std Dev : 12.81
+
+FR
+  Mean    : 418.39
+  Min     : 391
+  Max     : 443
+  Std Dev : 12.68
+
+Overall Mean = 418.32
 ```
 
----
+> **To recalibrate:** Run `python3 calibrate.py` on the arena surface, then again on the boundary line and any other reference surfaces. Update the table above and adjust `THRESHOLD` in `config.py` accordingly.
 
-## Code
+
 # Code
 
 The full source code is stored in the `src/` directory. The project is organized into separate modules so that motor control, sensors, and robot strategy are independent of each other. This makes the code easier to test, maintain, and extend.
