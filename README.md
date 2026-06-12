@@ -4,96 +4,40 @@
 
 ## Design
 
+> Tung Tung Tung Sahur is a Raspberry Pi-based differential drive sumo robot built for a 4-robot battle royale format. The robot uses photoresistor RC timing for edge detection and HC-SR04 ultrasonic sensors for opponent detection. It operates as a priority-based behaviour loop: edge avoidance takes precedence over attack, which takes precedence over wandering. The final version (3.0) added a ramp-base barrier and an LED strip after assessing other teams' designs during the build period.
+ 
+> **Note on photos:** Our group did not have enough time to take in-progress build photos during the construction phase. The images referenced in the template are absent for this reason.
+ 
+---
+ 
+## Design
+ 
 ### What the Robot Needs to Do
-
-#### Startup Sequence
  
--  On button press, robot waits **3 seconds** before any movement begins
--  After delay, robot enters **WANDER mode** as the default state
----
+1. Start autonomously via a physical button press — no SSH during a round
+2. Wait exactly 3 seconds after the button press before any movement
+3. Detect the ring boundary (white line) using photoresistor sensors and recover back into the ring
+4. Detect an opponent at range using the front and rear ultrasonic sensors and charge
+5. Switch to a high-force push sequence when the opponent is within close range
+6. Wander with positional variety when no edge or opponent is detected
+7. Run the full match without any SSH intervention
+### Success Criteria
  
-#### WANDER Mode (Default)
- 
--  Robot moves forward continuously
--  Robot rotates **every 5 seconds** while moving
--  Wander resumes automatically after any non-terminal state resolves
----
- 
-#### Edge Detection - Front
- 
-**Trigger:** Any of the front photoresistors detect black (dohyo edge)
- 
--  Robot reverses away from the edge
--  Robot turns **180 degrees**, steering away from the triggered sensor specifically
--  Small delay is applied
--  Robot resumes forward movement
----
- 
-#### Edge Detection - Back
- 
-**Trigger:** Any of the back photoresistors detect black
- 
--  Robot moves **forward at full charge** for a few seconds to clear the edge
--  Resumes normal state after
----
- 
-#### Edge Detection - Side (Turn 90°)
- 
-**Trigger:** Side edge condition (feeds into the shared edge recovery box)
- 
--  Robot turns **90 degrees to the right** to clear the edge
--  Resumes normal state after
----
- 
-#### Conflict Priority - Edge + Opponent Detected
- 
-**Trigger:** Front edge detection AND opponent detected (front or back), or back edge detection AND opponent detected
- 
--  Photoresistor light sensor is **prioritized** over distance sensor signals
--  Edge avoidance executes first before opponent engagement logic
-> **Branch point:** After edge/conflict resolution, check - is it the back sensor that triggered?
- 
--  If **yes** (back sensor) → execute back-sensor-specific recovery
--  If **no** → resume wander
----
- 
-#### Opponent Detection - Back (Distance Sensor)
- 
-**Trigger:** Back distance sensor detects opponent
- 
--  Robot turns **180 degrees**
--  Robot then charges forward at **medium speed**
--  Continues to "Close to opponent?" check
----
- 
-#### Opponent Detection - Front (Distance Sensor)
- 
-**Trigger:** Front distance sensor detects opponent
- 
--  Robot charges forward at **medium speed** directly
--  Continues to "Close to opponent?" check
----
- 
-#### CHARGE Mode → Close Proximity Check
- 
--  Robot evaluates whether opponent is **within close range**
--  If **no** → continues charging, re-checks proximity
--  If **yes** → enters **BRUTAL PUSH mode**
----
- 
-#### BRUTAL PUSH Mode
- 
-**Trigger:** Opponent confirmed close (ramp engaged)
- 
--  Robot charges **full speed forward**
--  Robot reverses back a **shorter distance than it charged**
--  Sequence (charge forward → short reverse) **loops 3 times**
--  Ramp is physically engaged during this mode
----
+| Requirement | How we tested it | Pass condition |
+|---|---|---|
+| 3-second startup delay | Timed with a stopwatch from button press to first wheel movement, 5 trials | Delay is between 2.9 s and 3.1 s on all trials |
+| Front edge detection | Drove robot forward toward the boundary line from 30 cm away, 10 trials per sensor | Robot reverses and turns away from the triggered sensor within 0.5 s on at least 9 of 10 trials |
+| Rear edge detection | Pushed robot backward until rear sensors crossed the line, 10 trials | Robot drives forward to clear the edge on at least 9 of 10 trials |
+| Opponent detection and charge | Placed a static obstacle at 20 cm in front of the robot, 10 trials | Robot charges within 1 s of obstacle entering range on at least 9 of 10 trials |
+| Brutal push sequence | Placed obstacle within close-range threshold, observed loop count | Robot executes exactly 3 charge-reverse cycles before returning to normal behaviour |
+| Wander coverage | Let robot wander on the ring for 30 seconds with no obstacles | Robot does not repeat the same arc more than once; changes direction at least once per 5-second window |
+| Full-match autonomous run | Ran robot through one complete 3-minute simulated match | Robot never requires SSH; no motors stuck; program exits cleanly via button or KeyboardInterrupt |
 
 ### System Architecture
+The robot uses a priority-based behaviour loop rather than a formal state machine. Three behaviours are evaluated in strict priority order every iteration of the main loop: edge avoidance, opponent attack, and wander. The diagram below describes the states and their transitions.
 
 <img width="348" height="342" alt="image" src="https://github.com/user-attachments/assets/9e31ce9c-e5a5-4b6c-9516-61a376986f14" />
+**Priority rule:** If edge and opponent are detected simultaneously, edge recovery always executes first. Losing track of an opponent is preferable to exiting the ring.
 
 
 ### Circuit Design
@@ -169,19 +113,20 @@ The new chassis assembly sequence:
 #### Sensor Layout
  
 ```
-        [FRONT]
-   ___________________
-   |  o o o o o o     |   ← 6× photoresistor + LED (right side, bottom edge)
-  /  [DIST SENSOR]    \   ← 3D-printed ramp
- /                     \
-|  o o o o o o         |  
-|  [BREADBOARD + Pi]   |
-|                      | 
- \                     /
-  \  [DIST SENSOR]    /   ← 3D-printed ramp
-   |    o o o o o o  |  ← 6× photoresistor + LED (left side, bottom edge)
-   -------------------
-        [REAR]
+              [FRONT]
+   _________________________________
+   |  o  o  o  o  o  o             |   ← 6× photoresistor + LED (right side, bottom)
+  /     [FRONT DIST SENSOR]         \  ← 3D-printed ramp + ramp-base barrier (v3.0)
+ /                                   \
+|   [LEFT MOTOR]   [RIGHT MOTOR]      |
+|   [BREADBOARD 1] [BREADBOARD 2]     |  ← sensor wiring left, motor driver right
+|        [Raspberry Pi below]         |
+|   [BATTERY 1 - Pi] [BATTERY 2 - M] |
+ \                                   /
+  \     [REAR DIST SENSOR]          /  ← 3D-printed ramp
+   |  o  o  o  o  o  o            |   ← 6× photoresistor + LED (left side, bottom)
+   ---------------------------------
+              [REAR]
 ```
  
 - **Distance sensors** face outward from each ramp; used to detect opponent in CHARGE range
