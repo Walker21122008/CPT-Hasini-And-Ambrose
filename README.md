@@ -255,8 +255,8 @@ To calibrate the threshold, a dedicated calibration program was run on the actua
 
 | Surface               | Mean RC Time | Standard Deviation | Samples |
 | --------------------- | ------------ | ------------------ | ------- |
-| Arena surface (black) | 418.32       | 12.47              | 100     |
-| Boundary line (white) | 704.91       | 18.63              | 100     |
+| Boundary line (black) | 418.32       | 12.47              | 100     |
+| Arena surface (white) | 704.91       | 18.63              | 100     |
 | Wooden table          | 531.08       | 22.15              | 100     |
 
 ## Chosen Threshold
