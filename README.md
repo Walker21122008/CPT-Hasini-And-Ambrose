@@ -63,6 +63,7 @@ BL(chip 2): In 1 gpio 20, in 2 gpio21
 BR(chip 2):in 4 gpio 8, in 3 gpio 7
 
 ### Physical Layout
+<img width="2880" height="2304" alt="Cheng 2 0 - top view (4)" src="https://github.com/user-attachments/assets/58f765a5-3788-47f7-9109-c32424d4cdda" />
 
 
 
