@@ -133,6 +133,9 @@ The new chassis assembly sequence:
 #### Design changes: Tung Tung Tung Sahur 2.0 → Tung Tung Tung Sahur 3.0
 After conversing with other groups to find out their weaknesses, we figured that almost every group was using a ramp like us. We figured that we had to prevent the other robots from gaining access to the wheels. So, we decided to put a barrier for the robot ramp at the base to protect it from other robots. We also decided to use an LED Strip instead of the normal LED lights connected through a circuit since the LEDS weren't bright enough for us to test. Here is the prototype of our new design:
 
+<img width="2880" height="2304" alt="Cheng 2 0 - top view (3)" src="https://github.com/user-attachments/assets/4e07a92a-cbf5-490d-8122-a06c9bc738eb" />
+
+
 
 ---
 ### Wiring
@@ -500,12 +503,12 @@ Because `finally` executes after both successful execution and exceptions, it pr
 
 ## Results
 
-| Round   | Placement | Bonus Points | Round Total |
-| ------- | --------- | ------------ | ----------- |
-| Round 1 | Last      | 0            | 0           |
-| Round 2 | —         | 2            | 2           |
-| Round 3 | —         | 2            | 2           |
-| **Total** |         |              | **4**       |
+| Round   | Bonus Points | Round Total |
+| ------- | ------------ | ----------- |
+| Round 1 | 0            | 0           |
+| Round 2 | 2            | 2           |
+| Round 3 | 2            | 2           |
+| **Total**|              | **4**       |
 
 ---
 
@@ -515,21 +518,20 @@ Because `finally` executes after both successful execution and exceptions, it pr
 
 **Wiring survived the rounds.** The decision to consolidate onto pink wire, solder connections, and duct tape wire pairs together meant nothing came loose during matches. This was a real risk with a robot that takes impacts, and it held.
 
-**Robot was to hold up the two batteries** 
-
+**Structural integrity held under load.** The chassis successfully supported the dual battery configuration throughout all three rounds. Despite the added mass being a mobility problem, none of the structural joints, ramp mounts, or shield attachments failed under repeated impacts.
 ---
 
 ## What Failed
 
-### 1. H-Bridge Chip Failure — Two Motors Lost
+### 1. H-Bridge Chip Failure — Two Motors Lost (All Rounds)
 
-Two of the four drive motors stopped working between Round 1 and the rest of the competition. The root cause was a burned L293D H-bridge chip.
+Two of the four drive motors stopped working between Round 1 and the rest of the competition. The root cause was a burned L293D H-bridge chip which potentially damaged the motors.
 
-The L293D has a continuous current rating of 600mA per channel and a peak of 1.2A. Under load — especially when the robot strained against its own weight or made contact with an opponent — the motors drew more current than the chip could sustain. Heat built up, the chip degraded, and two motor channels failed. Running all four motors off the same chip without any heatsinking accelerated this.
+The L293D has a continuous current rating of 600mA per channel and a peak of 1.2A. Under load - especially when the robot strained against its own weight or made contact with an opponent - the motors drew more current than the chip could sustain. Heat built up, the chip degraded, and two motor channels failed. Running all four motors off the same chip without any heatsinking accelerated this.
 
 With only two functioning motors, the robot lost differential drive symmetry. Turning was unreliable and forward thrust was cut roughly in half.
 
-### 2. Robot Too Heavy to Move Effectively
+### 2. Robot Too Heavy to Move Effectively (All rounds)
 
 The second battery pack, reinforced cardboard shields, duct tape layering, and the LED strip added weight that the drive system wasn't sized for. The motors and wheels were carried over from Cheng 1.0, which had none of that additional mass.
 
@@ -541,9 +543,9 @@ The result was that the motors struggled to accelerate the robot from a standsti
 
 ### 1. Replace L293D with TB6612FNG Motor Drivers
 
-The TB6612FNG handles 1.2A continuous and 3.2A peak per channel, runs cooler, and has a lower internal resistance than the L293D. Two TB6612FNG boards (one per motor pair) would give each channel enough headroom to handle stall current without cooking the chip. This directly addresses the H-bridge failure — the L293D was simply undersized for four motors under competition load.
+The TB6612FNG handles 1.2A continuous and 3.2A peak per channel, runs cooler, and has a lower internal resistance than the L293D. Two TB6612FNG boards (one per motor pair) would give each channel enough headroom to handle stall current without cooking the chip. This directly addresses the H-bridge failure - the L293D was simply undersized for four motors under competition load.
 
 ### 2. Weight Audit Before Final Build Lock
 
-Before the next competition build is finalized, every component gets weighed and the total is checked against what the motors can actually move. The gear motors used have a rated stall torque, and that number should be the ceiling — not something discovered on competition day. If the build exceeds roughly 70% of stall torque at normal load, either the motors get upgraded or components get cut. The second battery and shields are worth keeping; the places to trim are redundant duct tape layers and any structural cardboard that isn't load-bearing.
+Before the next competition build is finalized, every component gets weighed and the total is checked against what the motors can actually move. The gear motors used have a rated stall torque, and that number should be the ceiling - not something discovered on competition day. If the build exceeds roughly 70% of stall torque at normal load, either the motors get upgraded or components get cut. The second battery and shields are worth keeping; the places to trim are redundant duct tape layers and any structural cardboard that isn't load-bearing.
 
