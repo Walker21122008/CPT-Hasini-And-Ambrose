@@ -15,7 +15,7 @@
 1. Start autonomously via a physical button press — no SSH during a round
 2. Wait exactly 3 seconds after the button press before any movement
 3. Detect the ring boundary (Black line) using photoresistor sensors and recover back into the ring
-4. Detect an opponent at range using the front and back ultrasonic sensors and charge
+4. Detect an opponent at range using the front and rear ultrasonic sensors and charge
 5. Switch to a high-force push sequence when the opponent is within close range
 6. Wander with positional variety when no edge or opponent is detected
 7. Run the full match without any SSH intervention
@@ -48,7 +48,8 @@ The robot uses a priority-based behaviour loop rather than a formal state machin
 - 2x HC-SR04 Ultrasonic Sound Distance Sensor
 - 6x  0.22uF Tantalum Capacitor
 - 6x 200 Ohm Resistors
-- 2x L293D H-Bridge 
+- 2x L293D H-Bridge
+- 1x Respberry PI 
 
 > Our circuit is shown in the picture below. We use a program called Cirkit Designer. We use it for our designing process because it has a better visual UI and more simple controls, allowing us to identify issues and make changes quickly. Later, we used this as our guide for the physical building process. 
 <img width="2880" height="2304" alt="Cheng 2 0 - top view (1)" src="https://github.com/user-attachments/assets/f01c1e03-4ab8-401d-8c73-4447c4af56fd" />
@@ -102,10 +103,10 @@ The first version followed the guided kit build:
 
 ### Cheng 2.0 Redesign
  
-Cheng 2.0 retains the core base plate and drive system but adds substantial structural and sensing upgrades. Ramps were added to both ends to deflect incoming robots. Cardboard-enforced shields were added on both sides to protect the motors and wheels. Sensors were redistributed to the perimeter rather than centralized on the breadboard.
+Cheng 2.0 retains the idea and drive system but adds substantial structural and sensing upgrades. Ramps were added to both ends to deflect incoming robots. Cardboard-enforced shields were added on both sides to protect the motors and wheels. Sensors were redistributed to the perimeter rather than centralized on the breadboard.
  
 The new chassis assembly sequence:
-1. Retain base plate, motors, wheels, and caster from Cheng 1.0
+1. Retain motors, wheels, and caster from Cheng 1.0
 2. Attach 3D-printed ramps to front and rear edges of the base
 3. Cut and fold cardboard side shields; align flush with wheel height
 4. Mount distance sensors at the tip of each ramp (front + rear)
@@ -119,32 +120,32 @@ The new chassis assembly sequence:
  
 | Feature | Cheng 1.0 | Cheng 2.0 | Reason |
 |---|---|---|---|
-| **Base platform** | Single flat MDF/cardboard layer | Same base + side wing extensions | Needed mounting surfaces for ramps and lateral sensors |
+| **Base platform** | Single flat MDF/cardboard layer | extened base & side wing extensions | Needed mmore space to put larger breadboard |
 | **Front/rear structure** | Open, no shielding | 3D-printed ramps on both ends | Deflects opponent robots up and over; improves pushing leverage |
-| **Side structure** | Bare, motors exposed | Cardboard-enforced shields both sides | Protects wheels and motors from side impacts |
-| **Distance sensors** | None | 2 distance sensors on either side | Opponent detection at range; enables CHARGE state trigger |
-| **Light sensors** | one at front | 6× photoresistor sensors per side (12 total, at base edge) | Full-perimeter boundary detection and detects the black tape |
-| **LEDs** | one at front | 6× LEDs per side (12 total) | Visual state feedback; paired with photoresistors for lighting up the shadow |
-| **Structural reinforcement** | Zip ties only | Duct tape on all ramp joints and shield seams | Fast field-repair; no tools required between rounds |
+| **Side structure** | Bare, motors exposed | Cardboard-enforced shields both sides | Protects hardwares from side impacts |
+| **Distance sensors** | None | 2 distance sensors on front and back | Opponent detection at range; enables CHARGE state trigger |
+| **Light sensors** | one at front | 3× photoresistor sensors per side (6 total, at base edge) | Full-perimeter boundary detection and detects the black tape |
+| **LEDs** | one at front | 3× LEDs per side (6 total) | Visual state feedback; paired with photoresistors for lighting up the shadow |
+| **Structural reinforcement** | Zip ties only | Duct tape on all ramp joints and wire connections | More organize wiring and stability |
 | **Sensor placement** | All centralized on breadboard | Distributed to ramps and side shields | Moves detection to the robot's physical perimeter |
-| **Weight distribution** | Top-heavy (Pi + breadboard stacked + double batteries stacked) | Sensors moved low and outward | Lowers center of mass; harder to flip |
+| **Weight distribution** | Top-heavy (Pi + breadboard stacked + power bank stacked) | Most weight are in the body | Lowers center of mass balance weight on front and back end |
 
 #### Sensor Layout
  
 ```
               [FRONT]
    _________________________________
-   |      o  o  o  o  o  o         |   ← 6× photoresistor + LED (right side, bottom)
+   |          o  o  o              |   ← 6× photoresistor + LED (bottom left, right and center)
   /     [FRONT DIST SENSOR]         \  ← 3D-printed ramp + ramp-base barrier (v3.0)
  /                                   \
 |   [LEFT MOTOR]   [RIGHT MOTOR]      |
 |   [BREADBOARD 1] [BREADBOARD 2]     |  ← sensor wiring left, motor driver right
 |        [Raspberry Pi below]         |
-|   [BATTERY 1 - Pi] [BATTERY 2 - M]  |
+|         [BATTERY 1 - Pi]            |
 |   [LEFT MOTOR]   [RIGHT MOTOR]      |
  \                                   /
   \     [REAR DIST SENSOR]          /  ← 3D-printed ramp
-   |     o  o  o  o  o  o           |   ← 6× photoresistor + LED (left side, bottom)
+   |          o  o  o              |   ← 3× photoresistor + LED (bottom left, right and center)
    ---------------------------------
               [REAR]
 ```
