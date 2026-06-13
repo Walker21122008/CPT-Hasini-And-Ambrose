@@ -14,8 +14,8 @@
  
 1. Start autonomously via a physical button press — no SSH during a round
 2. Wait exactly 3 seconds after the button press before any movement
-3. Detect the ring boundary (white line) using photoresistor sensors and recover back into the ring
-4. Detect an opponent at range using the front and rear ultrasonic sensors and charge
+3. Detect the ring boundary (Black line) using photoresistor sensors and recover back into the ring
+4. Detect an opponent at range using the front and back ultrasonic sensors and charge
 5. Switch to a high-force push sequence when the opponent is within close range
 6. Wander with positional variety when no edge or opponent is detected
 7. Run the full match without any SSH intervention
@@ -42,16 +42,31 @@ The robot uses a priority-based behaviour loop rather than a formal state machin
 ### Circuit Design
 
 #### Here are the components we decided to use for our design
-- 4x motors
-- A push button
-- 6x LED
-- 6x Photoresistor light sensor
-- 2x Distance Sensor
-- 6x caps
+- 4x DC motors
+- A push button Switch
+- 6x LED 
+- 6x Photoresistor light sensor(LDR)
+- 2x Ultrasonic Sound Distance Sensor
+- 6x  0.22uF capacitors 
 - 6x 200 Ohm Resistors
 - 2x L293D H-Bridge
 
+> Our circuit is shown in the picture below. We use a program called Cirkit Designer. We use it for our designing process because it has a better visual UI and more simple controls, allowing us to identify issues and make changes quickly. Later, we used this as our guide for the physical building process. 
 <img width="2880" height="2304" alt="Cheng 2 0 - top view (1)" src="https://github.com/user-attachments/assets/f01c1e03-4ab8-401d-8c73-4447c4af56fd" />
+
+### GPIO Ports
+| **Components** | **GPIO Number** |
+|---|---|
+| Button switch | GPIO 2 |
+| Photoresistor light sensor(LDR) 1 | GPIO 3|
+| Photoresistor light sensor(LDR) 2 | GPIO 4|
+| Photoresistor light sensor(LDR) 3 | GPIO 17|
+| Photoresistor light sensor(LDR) 4 | GPIO 27|
+| Photoresistor light sensor(LDR) 5 | GPIO 22|
+| Photoresistor light sensor(LDR) 6 | GPIO 10|
+| 
+
+
 
 Button SDA( Gpio2)
 LDRs 3,4,17,27,22,10
