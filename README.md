@@ -2,8 +2,6 @@
 
 ---
 
-## Design
-
 > Tung Tung Tung Sahur is a Raspberry Pi-based differential drive sumo robot built for a 4-robot battle royale format. The robot uses photoresistor RC timing for edge detection and HC-SR04 ultrasonic sensors for opponent detection. It operates as a priority-based behaviour loop: edge avoidance takes precedence over attack, which takes precedence over wandering. The final version (3.0) added a ramp-base barrier and an LED strip after assessing other teams' designs during the build period.
  
 > **Note on photos:** Our group did not have enough time to take in-progress build photos during the construction phase. The images referenced in the template are absent for this reason.
