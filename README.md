@@ -53,6 +53,14 @@ The robot uses a priority-based behaviour loop rather than a formal state machin
 
 <img width="2880" height="2304" alt="Cheng 2 0 - top view (1)" src="https://github.com/user-attachments/assets/f01c1e03-4ab8-401d-8c73-4447c4af56fd" />
 
+Button SDA( Gpio2)
+LDRs 3,4,17,27,22,10
+Distance sensor 1: trig 14, 15
+Sensor 2: trig 18, 23
+FR motor(chip 1): in 4 gpio 14, in 3 gpio25
+FL(chip 1): In 1 gpio 12, in 2 gpio 16, 
+BL(chip 2): In 1 gpio 20, in 2 gpio21
+BR(chip 2):in 4 gpio 8, in 3 gpio 7
 
 ### Physical Layout
 
