@@ -95,7 +95,7 @@ The new chassis assembly sequence:
 7. Re-route wiring from breadboard out to perimeter sensors
 
 #### Design Changes: Tung Tung Tung Sahur 1.0 → Tung Tung Tung Sahur 2.0
-<img width="1880" height="1304" alt="Cheng 2 0 - top view" src="https://github.com/user-attachments/assets/1158f446-8300-41b6-9731-b9976e2665d4" />
+<img width="2880" height="2304" alt="Cheng 2 0 - top view (2)" src="https://github.com/user-attachments/assets/0e774387-5fff-40d0-baa0-4542045ba865" />
 
  
 | Feature | Cheng 1.0 | Cheng 2.0 | Reason |
