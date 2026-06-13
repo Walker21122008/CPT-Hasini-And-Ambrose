@@ -55,9 +55,6 @@ The robot uses a priority-based behaviour loop rather than a formal state machin
 
 ### Physical Layout
 
-#### Before rough image planning
-<img width="2880" height="2304" alt="Cheng 2 0 - top view" src="https://github.com/user-attachments/assets/1158f446-8300-41b6-9731-b9976e2665d4" />
-
 
 
 ## Build
