@@ -115,16 +115,17 @@ The new chassis assembly sequence:
 ```
               [FRONT]
    _________________________________
-   |  o  o  o  o  o  o             |   ← 6× photoresistor + LED (right side, bottom)
+   |      o  o  o  o  o  o         |   ← 6× photoresistor + LED (right side, bottom)
   /     [FRONT DIST SENSOR]         \  ← 3D-printed ramp + ramp-base barrier (v3.0)
  /                                   \
 |   [LEFT MOTOR]   [RIGHT MOTOR]      |
 |   [BREADBOARD 1] [BREADBOARD 2]     |  ← sensor wiring left, motor driver right
 |        [Raspberry Pi below]         |
-|   [BATTERY 1 - Pi] [BATTERY 2 - M] |
+|   [BATTERY 1 - Pi] [BATTERY 2 - M]  |
+|   [LEFT MOTOR]   [RIGHT MOTOR]      |
  \                                   /
   \     [REAR DIST SENSOR]          /  ← 3D-printed ramp
-   |  o  o  o  o  o  o            |   ← 6× photoresistor + LED (left side, bottom)
+   |     o  o  o  o  o  o           |   ← 6× photoresistor + LED (left side, bottom)
    ---------------------------------
               [REAR]
 ```
