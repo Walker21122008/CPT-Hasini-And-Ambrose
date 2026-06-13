@@ -34,7 +34,8 @@
 ### System Architecture
 The robot uses a priority-based behaviour loop rather than a formal state machine. Three behaviours are evaluated in strict priority order every iteration of the main loop: edge avoidance, opponent attack, and wander. The diagram below describes the states and their transitions.
 
-<img width="348" height="342" alt="image" src="https://github.com/user-attachments/assets/9e31ce9c-e5a5-4b6c-9516-61a376986f14" />
+<img width="648" height="642" alt="image" src="https://github.com/user-attachments/assets/9e31ce9c-e5a5-4b6c-9516-61a376986f14" />
+
 **Priority rule:** If edge and opponent are detected simultaneously, edge recovery always executes first. Losing track of an opponent is preferable to exiting the ring.
 
 
