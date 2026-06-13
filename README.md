@@ -44,12 +44,11 @@ The robot uses a priority-based behaviour loop rather than a formal state machin
 #### Here are the components we decided to use for our design
 - 4x DC motors
 - A push button Switch
-- 6x LED 
 - 6x Photoresistor light sensor(LDR)
-- 2x Ultrasonic Sound Distance Sensor
-- 6x  0.22uF capacitors 
+- 2x HC-SR04 Ultrasonic Sound Distance Sensor
+- 6x  0.22uF Tantalum Capacitor
 - 6x 200 Ohm Resistors
-- 2x L293D H-Bridge
+- 2x L293D H-Bridge 
 
 > Our circuit is shown in the picture below. We use a program called Cirkit Designer. We use it for our designing process because it has a better visual UI and more simple controls, allowing us to identify issues and make changes quickly. Later, we used this as our guide for the physical building process. 
 <img width="2880" height="2304" alt="Cheng 2 0 - top view (1)" src="https://github.com/user-attachments/assets/f01c1e03-4ab8-401d-8c73-4447c4af56fd" />
@@ -58,24 +57,24 @@ The robot uses a priority-based behaviour loop rather than a formal state machin
 | **Components** | **GPIO Number** |
 |---|---|
 | Button switch | GPIO 2 |
-| Photoresistor light sensor(LDR) 1 | GPIO 3|
-| Photoresistor light sensor(LDR) 2 | GPIO 4|
+| Photoresistor light sensor(LDR) Front Left | GPIO 3|
+| Photoresistor light sensor(LDR) 1 | GPIO 4|
 | Photoresistor light sensor(LDR) 3 | GPIO 17|
 | Photoresistor light sensor(LDR) 4 | GPIO 27|
 | Photoresistor light sensor(LDR) 5 | GPIO 22|
 | Photoresistor light sensor(LDR) 6 | GPIO 10|
-| 
-
-
-
-Button SDA( Gpio2)
-LDRs 3,4,17,27,22,10
-Distance sensor 1: trig 14, 15
-Sensor 2: trig 18, 23
-FR motor(chip 1): in 4 gpio 14, in 3 gpio25
-FL(chip 1): In 1 gpio 12, in 2 gpio 16, 
-BL(chip 2): In 1 gpio 20, in 2 gpio21
-BR(chip 2):in 4 gpio 8, in 3 gpio 7
+| HC-SR04 Ultrasonic Sound Distance Sensor (Front)(Trig) | GPIO 14 |
+| HC-SR04 Ultrasonic Sound Distance Sensor (Front)(Echo) | GPIO 15 |
+| HC-SR04 Ultrasonic Sound Distance Sensor (Back)(Trig) | GPIO 18 |
+| HC-SR04 Ultrasonic Sound Distance Sensor (Back)(Echo) | GPIO 23 |
+| Front Right Motors (Chip 1)(In 4) | GPIO 14 |
+| Front Right Motors (Chip 1)(In 3) | GPIO 25 |
+| Front Left Motors (Chip 1)(In 1) | GPIO 12 |
+| Front Left Motors (Chip 1)(In 2) | GPIO 16 |
+| Back Left Motors (Chip 2)(In 1) | GPIO 20 |
+| Back Left Motors (Chip 2)(In 2) | GPIO 21 |
+| Back Right Motors (Chip 2)(In 4) | GPIO 8 |
+| Back Right Motors (Chip 2)(In 3) | GPIO 7 |
 
 ### Physical Layout
 <img width="2880" height="2304" alt="Cheng 2 0 - top view (4)" src="https://github.com/user-attachments/assets/58f765a5-3788-47f7-9109-c32424d4cdda" />
