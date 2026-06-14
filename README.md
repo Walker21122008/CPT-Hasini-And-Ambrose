@@ -118,7 +118,7 @@ The new chassis assembly sequence:
  
 | Feature | Cheng 1.0 | Cheng 2.0 | Reason |
 |---|---|---|---|
-| **Base platform** | Single flat MDF/cardboard layer | extened base & side wing extensions | Needed mmore space to put larger breadboard |
+| **Base platform** | Single flat MDF/cardboard layer | extened base & side wing extensions | Needed more space to put larger breadboard |
 | **Front/rear structure** | Open, no shielding | 3D-printed ramps on both ends | Deflects opponent robots up and over; improves pushing leverage |
 | **Side structure** | Bare, motors exposed | Cardboard-enforced shields both sides | Protect hardwares from side impacts |
 | **Distance sensors** | None | 2 distance sensors on front and back | Opponent detection at range; enables CHARGE state trigger |
