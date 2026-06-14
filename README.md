@@ -541,8 +541,8 @@ Because `finally` executes after both successful execution and exceptions, it pr
 | ------- | ------------ | ----------- |
 | Round 1 | 0            | 0           |
 | Round 2 | 2            | 2           |
-| Round 3 | 2            | 2           |
-| **Total**|              | **4**       |
+| Round 3 | 1            | 3           |
+| **Total**|              | **3**       |
 
 ---
 
