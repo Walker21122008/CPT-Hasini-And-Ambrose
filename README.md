@@ -50,7 +50,7 @@ The robot uses a priority-based behaviour loop rather than a formal state machin
 - 1x Respberry PI 
 
 > Our circuit is shown in the picture below. We use a program called Cirkit Designer. We use it for our designing process because it has a better visual UI and more simple controls, allowing us to identify issues and make changes quickly. Later, we used this as our guide for the physical building process. 
-<img width="2880" height="2304" alt="Cheng 2 0 - top view (1)" src="https://github.com/user-attachments/assets/f01c1e03-4ab8-401d-8c73-4447c4af56fd" />
+<img width="3000" height="1385" alt="circuit_image (1)" src="https://github.com/user-attachments/assets/7cd1b06a-1b45-4d8e-bd7c-1925434e370a" />
 
 ### GPIO Ports
 | **Components** | **GPIO Number** |
