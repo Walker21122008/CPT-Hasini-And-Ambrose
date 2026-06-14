@@ -186,19 +186,18 @@ The CanaKit GPIO breakout is connected to the left breadboard. Photoresistors (a
 In parallel with the main harness, we tested color-coded wiring for each component type to make individual signals easier to trace during debugging:
 
 
-Motors: blue and purple jumper wires <br>
-Distance sensors: pink wires <br>
-Photoresistor light sensors: other colour jumper wires <br>
-GPIO wiring: pink wires <br>
+**Motors:** blue and purple jumper wires <br>
+**Distance sensors:** pink wires <br>
+**Photoresistor light sensors:** other colour jumper wires <br>
+**GPIO wiring:** pink wires <br>
 
 <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/e64a538e-3248-4f10-a1a0-325cd4b37445" />
 Motor wiring test with color-coded leads. 
 
 Blue and purple wires connect to both motor terminals on each side. 
 
-Eventually we converted the full harness to pink wire since it was easier to solder in bulk and available in sufficient quantity. The component leads (motors, distance sensors, photoresistors) kept their color coding to preserve traceability, and pairs were secured together with electrical tape rather than duct tape for a cleaner finish that was less likely to leave residue on the breadboard connections.
+The component leads (motor and photoresistors) kept their color coding to preserve traceability, and pairs were secured together with electrical tape rather than duct tape for a cleaner finish that was less likely to leave residue on the breadboard connections.
 
-Eventually, we decided to convert everything to pink wires instead since it felt much easier to deal with a bit, and we could solder it much more easily. We just decided to keep the wiring for the components like the motor, distance sensor and photoresistor light sensor different colours and duct tape the pairs together to make it organized. Here is the final image of our wiring.
 
 <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/72a9f328-3347-4859-9193-e2435b9ae34d" />
 
