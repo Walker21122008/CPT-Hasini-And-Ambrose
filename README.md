@@ -225,9 +225,11 @@ This influenced hardware choices throughout the rest of the build (more motors, 
  
 ## Change 3 - Added a Second Battery + Two Breadboards
  
-**Battery:** The original single battery pack was not enough to power all four motors at competitive speed. We added a second battery dedicated to the motors, keeping the Pi on its own power rail. Running everything off one pack caused voltage sag under load, which slowed the motors at the worst possible moment.
+**Power:** The original single power source was not enough to power all four motors at competitive speed. We added a second battery dedicated to the motors, keeping the Pi on its own power rail. Running everything off one pack caused voltage sag under load, which slowed the motors at the worst possible moment.
  
 **Breadboards:** We switched from one breadboard to two. The original single breadboard became too cramped once we added the second H-bridge, the capacitors, and all the sensor wiring. Splitting across two boards gave us room to organize motor driver wiring on one side and sensor wiring on the other, which made debugging significantly easier.
+
+**Motors:** Base on our weight of our motor, we switched from weaker motors to stonger toque motors, allow our robot can still move with heavy weight. 
  
 ---
  
