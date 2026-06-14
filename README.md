@@ -110,7 +110,7 @@ The new chassis assembly sequence:
 2. Attach 3D-printed ramps to front and rear edges of the base
 3. Cut and fold cardboard side shields; align flush with wheel height
 4. Mount distance sensors at the tip of each ramp (front + rear)
-5. Mount 6× photoresistor + 6× LED arrays along the bottom edge of each side shield (12 sensors + 12 LEDs total)
+5. Mount 3× photoresistor + 3× LED arrays along the bottom edge of each side shield (6 sensors + 6 LEDs total)
 6. Reinforce all ramp joints and shield seams with duct tape
 7. Re-route wiring from breadboard out to perimeter sensors
 
@@ -122,20 +122,20 @@ The new chassis assembly sequence:
 |---|---|---|---|
 | **Base platform** | Single flat MDF/cardboard layer | extened base & side wing extensions | Needed mmore space to put larger breadboard |
 | **Front/rear structure** | Open, no shielding | 3D-printed ramps on both ends | Deflects opponent robots up and over; improves pushing leverage |
-| **Side structure** | Bare, motors exposed | Cardboard-enforced shields both sides | Protects hardwares from side impacts |
+| **Side structure** | Bare, motors exposed | Cardboard-enforced shields both sides | Protect hardwares from side impacts |
 | **Distance sensors** | None | 2 distance sensors on front and back | Opponent detection at range; enables CHARGE state trigger |
 | **Light sensors** | one at front | 3× photoresistor sensors per side (6 total, at base edge) | Full-perimeter boundary detection and detects the black tape |
 | **LEDs** | one at front | 3× LEDs per side (6 total) | Visual state feedback; paired with photoresistors for lighting up the shadow |
 | **Structural reinforcement** | Zip ties only | Duct tape on all ramp joints and wire connections | More organize wiring and stability |
-| **Sensor placement** | All centralized on breadboard | Distributed to ramps and side shields | Moves detection to the robot's physical perimeter |
-| **Weight distribution** | Top-heavy (Pi + breadboard stacked + power bank stacked) | Most weight are in the body | Lowers center of mass balance weight on front and back end |
+| **Sensor placement** | All centralized in the front | Distributed to ramps and side shields | Moves detection to the robot's physical perimeter |
+| **Weight distribution** | Top-heavy (Pi + breadboard stacked + power bank stacked) | Most weight are in the body | Lowers center of mass and balance weight of front and back end |
 
 #### Sensor Layout
  
 ```
               [FRONT]
    _________________________________
-   |          o  o  o              |   ← 6× photoresistor + LED (bottom left, right and center)
+   |          o  o  o              |   ← 3× photoresistor + LED (bottom left, right and center)
   /     [FRONT DIST SENSOR]         \  ← 3D-printed ramp + ramp-base barrier (v3.0)
  /                                   \
 |   [LEFT MOTOR]   [RIGHT MOTOR]      |
@@ -151,13 +151,27 @@ The new chassis assembly sequence:
 ```
  
 - **Distance sensors** face outward from each ramp; used to detect opponent in CHARGE range
-- **Photoresistors** are mounted along the bottom edge of the side shields; detect the white boundary line
+- **Photoresistors** are mounted along the bottom edge of the side shields; detect the black boundary line
 - **LEDs** are paired next to each photoresistor for active illumination and state visualization
 
 #### Design changes: Tung Tung Tung Sahur 2.0 → Tung Tung Tung Sahur 3.0
 After conversing with other groups to find out their weaknesses, we figured that almost every group was using a ramp like us. We figured that we had to prevent the other robots from gaining access to the wheels. So, we decided to put a barrier for the robot ramp at the base to protect it from other robots. We also decided to use an LED Strip instead of the normal LED lights connected through a circuit since the LEDS weren't bright enough for us to test. Here is the prototype of our new design:
 
 <img width="2880" height="2304" alt="Cheng 2 0 - top view (3)" src="https://github.com/user-attachments/assets/4e07a92a-cbf5-490d-8122-a06c9bc738eb" />
+
+| Feature | Cheng 1.0 | Cheng 2.0 | Cheng 3.0 | Reason |
+|---|---|---|---|---|
+| **Base platform** | Single flat MDF/cardboard layer | extened base & side wing extensions | Same as 2.0 | N/A |
+| **Front/rear structure** | Open, no shielding | 3D-printed ramps on both ends | Change from 3D printed ramps to cardboard shield | Limited time and avoid being attack |
+| **Side structure** | Bare, motors exposed | Cardboard-enforced shields both sides | we extent the tall of the sides | Allow more protection on the wheels & protect hardwares from side impacts |
+| **Motor Selection** | Yellow 1:48 gear ratio motors  | Yellow 1:48 gear ratio motors | White 1:143 gear ratio motor | Stronger Torque, allow to move with heavy weight |
+| **Distance sensors** | None | 2 distance sensors on front and back | Same as 2.0 | N/A |
+| **Light sensors** | one at front | 3× photoresistor sensors per side (6 total, at base edge) | Same as 2.0 | N/A |
+| **LEDs** | one at front | 3× LEDs per side (6 total) | LED strip | More brightness and durability |
+| **Structural reinforcement** | Zip ties only | Duct tape on all ramp joints and wire connections | Change most tape to electric tape | Duck tape will shorten the circuit |
+| **Sensor placement** | All centralized in the front | Distributed to ramps and side shields |  Distributed to the bottom of each shield | better placement with more protection |
+| **Weight distribution** | Top-heavy (Pi + breadboard stacked + power bank stacked) | Most weight are in the body | Same as 2.0 | N/A |
+
 
 
 
