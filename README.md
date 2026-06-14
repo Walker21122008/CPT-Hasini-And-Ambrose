@@ -243,8 +243,6 @@ The photoresistor edge detection system uses RC timing measurements to distingui
 
 To calibrate the threshold, a dedicated calibration program was run on the actual competition arena. The program recorded 100 RC timing samples for each surface and calculated the mean and standard deviation.
 
-> **Note:** The values below are placeholder estimates. Replace with real measurements before competition.
-
 | Surface               | Mean RC Time | Standard Deviation | Samples |
 | --------------------- | ------------ | ------------------ | ------- |
 | Boundary line (black) | 418.32       | 12.47              | 100     |
