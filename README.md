@@ -92,7 +92,7 @@ The first version followed the guided kit build:
 1. Motor brackets were attached to the MDF base plate
 2. Two yellow DC gear motors were mounted in the rear brackets
 3. Rubber wheels were press-fitted onto motor shafts
-4. A caster wheel was mounted at the rear for balance
+4. A caster wheel was mounted at the front for balance
 5. The breadboard was zip-tied flat on top of the base
 6. The Raspberry Pi was mounted below the breadboard layer, connected via a 40-pin GPIO ribbon cable. The robot had no shielding, no ramps, and sensors were limited to only one photoresistor sensor
 
@@ -228,8 +228,6 @@ This influenced hardware choices throughout the rest of the build (more motors, 
 **Power:** The original single power source was not enough to power all four motors at competitive speed. We added a second battery dedicated to the motors, keeping the Pi on its own power rail. Running everything off one pack caused voltage sag under load, which slowed the motors at the worst possible moment.
  
 **Breadboards:** We switched from one breadboard to two. The original single breadboard became too cramped once we added the second H-bridge, the capacitors, and all the sensor wiring. Splitting across two boards gave us room to organize motor driver wiring on one side and sensor wiring on the other, which made debugging significantly easier.
-
-**Motors:** Base on our weight of our motor, we switched from weaker motors to stonger toque motors, allow our robot can still move with heavy weight. 
  
 ---
  
