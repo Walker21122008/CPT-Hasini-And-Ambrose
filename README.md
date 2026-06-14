@@ -66,7 +66,7 @@ The robot uses a priority-based behaviour loop rather than a formal state machin
 | HC-SR04 Ultrasonic Sound Distance Sensor (Front)(Echo) | GPIO 15 |
 | HC-SR04 Ultrasonic Sound Distance Sensor (Back)(Trig) | GPIO 18 |
 | HC-SR04 Ultrasonic Sound Distance Sensor (Back)(Echo) | GPIO 23 |
-| Front Right Motors (Chip 1)(In 4) | GPIO 14 |
+| Front Right Motors (Chip 1)(In 4) | GPIO 24 |
 | Front Right Motors (Chip 1)(In 3) | GPIO 25 |
 | Front Left Motors (Chip 1)(In 1) | GPIO 12 |
 | Front Left Motors (Chip 1)(In 2) | GPIO 16 |
