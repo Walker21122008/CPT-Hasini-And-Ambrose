@@ -553,6 +553,7 @@ Because `finally` executes after both successful execution and exceptions, it pr
 **Wiring survived the rounds.** The decision to consolidate onto pink wire, solder connections, and duct tape wire pairs together meant nothing came loose during matches. This was a real risk with a robot that takes impacts, and it held.
 
 **Structural integrity held under load.** The chassis successfully supported the dual battery configuration throughout all three rounds. Despite the added mass being a mobility problem, none of the structural joints, ramp mounts, or shield attachments failed under repeated impacts.
+
 ---
 
 ## What Failed
