@@ -186,9 +186,10 @@ The CanaKit GPIO breakout is connected to the left breadboard. Photoresistors (a
 In parallel with the main harness, we tested color-coded wiring for each component type to make individual signals easier to trace during debugging:
 
 
-Motors: blue and purple
-Distance sensors: yellow, orange, and red
-Photoresistor light sensors: green
+Motors: blue and purple jumper wires <br>
+Distance sensors: pink wires <br>
+Photoresistor light sensors: other colour jumper wires <br>
+GPIO wiring: pink wires <br>
 
 <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/e64a538e-3248-4f10-a1a0-325cd4b37445" />
 Motor wiring test with color-coded leads. 
