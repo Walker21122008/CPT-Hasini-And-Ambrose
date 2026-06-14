@@ -179,9 +179,8 @@ After conversing with other groups to find out their weaknesses, we figured that
 Wiring was organized from the early stage by using only pink wires for the main harness, laid flat and routed along the chassis edge to reduce the chance of a wire getting snagged or pulled free during a match.
 
 <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/e973feff-c0d0-4e81-b107-bb8677f89d84" />
-Early wiring stage. 
 
-The CanaKit GPIO breakout is connected to the left breadboard. Photoresistors (amber, center-left column) and resistors are inserted but not yet routed to the second board. The two L293D H-bridge ICs are visible on the right breadboard, not yet wired to motors.
+The CanaKit GPIO breakout is connected to the left breadboard. Tantalum capacitors (amber, center-left column) and resistors for distance sensor changing 5V to 3.3V are inserted. The two L293D H-bridge ICs are visible on the right breadboard, not yet wired to motors.
 
 In parallel with the main harness, we tested color-coded wiring for each component type to make individual signals easier to trace during debugging:
 
