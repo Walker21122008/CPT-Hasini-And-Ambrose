@@ -590,4 +590,4 @@ The TB6612FNG handles 1.2A continuous and 3.2A peak per channel, runs cooler, an
 Before the next competition build is finalized, every component gets weighed and the total is checked against what the motors can actually move. The gear motors used have a rated stall torque, and that number should be the ceiling - not something discovered on competition day. If the build exceeds roughly 70% of stall torque at normal load, either the motors get upgraded or components get cut. The second battery and shields are worth keeping; the places to trim are redundant duct tape layers and any structural cardboard that isn't load-bearing.
 
 ### **3. Better time management**
-Since we only have a week to finish this project, we should design a smaller & less difficult robot, but instead, we design a very complex robot that we can't finish at all. Next time, we could look through, think, then design a robot matches within the time we have.
+We underestimated how long the redesigns would take. Starting with a simpler, more buildable design and adding complexity only if time allowed would have left more room for calibration and testing before competition day.
