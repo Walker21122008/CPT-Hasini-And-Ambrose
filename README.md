@@ -579,12 +579,16 @@ The result was that the motors struggled to accelerate the robot from a standsti
 ---
 
 ## Next Iteration
+To ensure future iterations do not suffer from the same mechanical and electrical compounding failures. We listed a few soluction that we should do next time.
 
-### 1. Replace L293D with TB6612FNG Motor Drivers
+### **1. Better componets selection**
+Most of our components are old, and most can be improved with newer ones, for example, the L293D. It is an IC from the old generation; we could replace it with the newer ones to decrease the chance of facing bugs and issues.
 
+#### Example:
 The TB6612FNG handles 1.2A continuous and 3.2A peak per channel, runs cooler, and has a lower internal resistance than the L293D. Two TB6612FNG boards (one per motor pair) would give each channel enough headroom to handle stall current without cooking the chip. This directly addresses the H-bridge failure - the L293D was simply undersized for four motors under competition load.
 
-### 2. Weight Audit Before Final Build Lock
-
+### **2. Weight Audit Before Final Build Lock**
 Before the next competition build is finalized, every component gets weighed and the total is checked against what the motors can actually move. The gear motors used have a rated stall torque, and that number should be the ceiling - not something discovered on competition day. If the build exceeds roughly 70% of stall torque at normal load, either the motors get upgraded or components get cut. The second battery and shields are worth keeping; the places to trim are redundant duct tape layers and any structural cardboard that isn't load-bearing.
 
+### **3. Better time management**
+Since we only have a week to finish this project, we should design a smaller & less difficult robot, but instead, we design a very complex robot that we can't finish at all. Next time, we could look through, think, then design a robot within the time we have.
