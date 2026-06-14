@@ -201,13 +201,12 @@ The component leads (motor and photoresistors) kept their color coding to preser
 <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/72a9f328-3347-4859-9193-e2435b9ae34d" />
 
 
-### Decisions Made During the Build
+## Decisions Made During the Build
 
 A running record of every decision made during the redesign of Cheng 1.0 into our competition sumo bot.
 
----
  
-## Change 1 - Chassis Redesign: Ramp Bot
+### Change 1 - Chassis Redesign: Ramp Bot
  
 We replaced the original flat chassis with a ramp-style design. Angled ramps were added to the front and rear of the robot so that when we make contact with an opponent, their chassis rides up our ramp instead of pushing back flat against us. This shifts the contact force downward and makes it much harder for the opponent to get traction against us.
  
@@ -215,7 +214,7 @@ The side shields were also reinforced with cardboard and duct tape to protect th
  
 ---
  
-## Change 2 - Strategy: Prioritize Weight and Ramming
+### Change 2 - Strategy: Prioritize Weight and Ramming
  
 After talking with other teams and assessing their designs, we identified our best path to winning: be the heaviest robot in the ring and ram aggressively. Lighter, faster bots lose traction when hit by something heavier moving at full speed. Our strategy leans into this — rather than trying to out-maneuver opponents, we charge straight at them and rely on mass and motor force to push them out.
  
@@ -223,7 +222,7 @@ This influenced hardware choices throughout the rest of the build (more motors, 
  
 ---
  
-## Change 3 - Added a Second Battery + Two Breadboards
+### Change 3 - Added a Second power source + Two Breadboards
  
 **Power:** The original single power source was not enough to power all four motors at competitive speed. We added a second battery dedicated to the motors, keeping the Pi on its own power rail. Running everything off one pack caused voltage sag under load, which slowed the motors at the worst possible moment.
  
