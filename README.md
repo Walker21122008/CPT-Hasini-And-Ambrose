@@ -557,19 +557,24 @@ Because `finally` executes after both successful execution and exceptions, it pr
 
 ## What Failed
 
-### 1. H-Bridge Chip Failure — Two Motors Lost (All Rounds)
+### 1. Oversizing
+Our robot is over the size limit, which is some issue that was not expected, but we found out it could be fixed during the matches, but because of another issue with the motor, our robot cannot function well and sadly needs to leave the competition earlier.
 
-Two of the four drive motors stopped working between Round 1 and the rest of the competition. The root cause was a burned L293D H-bridge chip which potentially damaged the motors.
+### 2. Robot Not moving properly (All rounds)
 
-The L293D has a continuous current rating of 600mA per channel and a peak of 1.2A. Under load - especially when the robot strained against its own weight or made contact with an opponent - the motors drew more current than the chip could sustain. Heat built up, the chip degraded, and two motor channels failed. Running all four motors off the same chip without any heatsinking accelerated this.
+These are a few scenarios we guess could cause our robot to not move with a higher speed. They have not been tested, but there is a high chance these are the effects. With these few scenarios happening at the same time, making the robot much weaker, it lost the advantage it has. 
 
-With only two functioning motors, the robot lost differential drive symmetry. Turning was unreliable and forward thrust was cut roughly in half.
+#### Scenario 1
+The unstability of the motor. Since our motor is hot-glue connected to the base and our base is made with cardboard. When we put the robot on the ground without stability, the wheels are facing upward, creating less surface connecting to the ground. Possibly decreasing friction, and according to Newton's third law, without too much friction, our wheels are slipping on the field. 
 
-### 2. Robot Too Heavy to Move Effectively (All rounds)
+#### Scenario 2
+Our robot is too heavy. Within two battery packs, reinforced cardboard shields, duct tape layering, and the LED strip's battery. These resources increase the weight of the robot itself, and if the motor is not strong enough, it will decrease speed and create high amps. 
 
-The second battery pack, reinforced cardboard shields, duct tape layering, and the LED strip added weight that the drive system wasn't sized for. The motors and wheels were carried over from Cheng 1.0, which had none of that additional mass.
+#### Scenario 3 
+H-Bridge Chip Failure. Since we use L293D ICs, it has a continuous current rating of 600 mA per channel and a peak of 1.2 A. When facing underloading, especially when the robot strained against its own weight or made contact with an opponent, the motors will create high amps because no output can be released, causing extra heat on the IC. Heat built up, and the chip degraded, causing two motor channels to fail. With only two functioning motors, the robot lost differential drive symmetry. Turning was unreliable, and forward thrust was cut roughly in half. 
 
-The result was that the motors struggled to accelerate the robot from a standstill, especially on the slightly textured arena surface. The ramming strategy depended entirely on building speed before contact — a robot that can barely move can't execute that strategy. The weight distribution changes that were meant to lower the center of mass ended up working against mobility instead.
+
+The result was that the motors struggled to accelerate the robot from a standstill, especially on the slightly textured arena surface. The ramming strategy depended entirely on building speed before contact—a robot that can barely move can't execute that strategy. The weight distribution changes that were meant to lower the center of mass ended up working against mobility instead.
 
 ---
 
