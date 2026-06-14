@@ -162,7 +162,7 @@ After conversing with other groups to find out their weaknesses, we figured that
 | **Base platform** | Single flat MDF/cardboard layer | extened base & side wing extensions | Same as 2.0 | N/A |
 | **Front/rear structure** | Open, no shielding | 3D-printed ramps on both ends | Change from 3D printed ramps to cardboard shield | Limited time and avoid being attack |
 | **Side structure** | Bare, motors exposed | Cardboard-enforced shields both sides | we extent the tall of the sides | Allow more protection on the wheels & protect hardwares from side impacts |
-| **Motor Selection** | Yellow 1:48 gear ratio motors  | Yellow 1:48 gear ratio motors | White 1:143 gear ratio motor | Stronger Torque, allow to move with heavy weight |
+| **Motor Selection** | Yellow 1:48 gear ratio motors  | Yellow 1:48 gear ratio motors | White 1:143 gear ratio motor, and output shaft converter | Stronger Torque, allow to move with heavy weight, then because we want to use the same wheel as the old verion ones, so we 3D print some converters allow us to use the same wheel as the old ones. |
 | **Distance sensors** | None | 2 distance sensors on front and back | Same as 2.0 | N/A |
 | **Light sensors** | one at front | 3× photoresistor sensors per side (6 total, at base edge) | Same as 2.0 | N/A |
 | **LEDs** | one at front | 3× LEDs per side (6 total) | LED strip | More brightness and durability |
